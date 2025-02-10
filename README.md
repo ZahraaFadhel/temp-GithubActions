@@ -22,12 +22,12 @@ The project is divided into multiple use cases, each assigned to specific team m
 | **UC2**  | Log in | Israa Alwedaei |
 | **UC3**  | Forget Password | Israa Alwedaei |
 | **UC4**  | Update Account | Israa Alwedaei |
-| **UC5**  | View Bookings | Israa Alwedaei |
+| **UC5**  | View Bookings | Malak Zakareya |
 | **UC6**  | Browse Movies | Zahraa Fadhel |
-| **UC7**  | Search | Malak Zakareya |
-| **UC8**  | Filter | Malak Zakareya |
-| **UC9**  | Booking | Zahraa Fadhel |
-| **UC10** | Checkout | Manar Alshaikh |
+| **UC7**  | Search | Zahraa Fadhel |
+| **UC8**  | Filter | Zahraa Fadhel |
+| **UC9**  | Booking | Malak Zakareya |
+| **UC10** | Checkout | Malak Zakareya |
 | **UC11** | Confirmation Email | Zahraa Fadhel |
 | **UC12** | Cancel Booking | Malak Zakareya |
 | **UC13** | Manage Movies | Manar Alshaikh |
