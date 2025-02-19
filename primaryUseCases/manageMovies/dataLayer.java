@@ -84,22 +84,7 @@ public class dataLayer {
         for (Movie movie : movies) {
             System.out.println(movie);
         }
-    }
-
-    // Method to display movies filtered by language
-    public void displayMoviesByLanguage(String language) {
-        boolean found = false;
-        for (Movie movie : movies) {
-            if (movie.getLanguage().equalsIgnoreCase(language)) {
-                System.out.println(movie);
-                found = true;
-            }
-        }
-
-        // Notify if no movies are found in the specified language
-        if (!found) {
-            System.out.println("\033[1;31mNo movies available in " + language + ".\033[0m");
-        }
+        System.out.println();
     }
 
     // Inner Movie class to represent a movie

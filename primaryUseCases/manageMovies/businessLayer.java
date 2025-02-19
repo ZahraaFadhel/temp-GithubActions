@@ -194,25 +194,4 @@ public class businessLayer {
             System.out.println("\033[1;31mNo movie found with that title.\033[0m");
         }
     }    
-
-    // Method to display movies
-    public void showMovies() {
-        System.out.println("\033[1;34m1. Show all movies\033[0m");
-        System.out.println("\033[1;34m2. Show by language\033[0m");
-        System.out.print("\033[1;33mEnter your choice: \033[0m");
-    
-        int option = scanner.nextInt();
-        scanner.nextLine();
-    
-        // Display movies based on the selected option
-        if (option == 1) {
-            dataLayer.displayMovies(1); // Show all movies
-        } else if (option == 2) { // Filter by language
-            System.out.print("\033[1;34mEnter language (English/Arabic): \033[0m");
-            String language = scanner.nextLine();
-            dataLayer.displayMoviesByLanguage(language);
-        } else {
-            System.out.println("\033[1;31mInvalid choice. Please try again.\033[0m");
-        }
-    }
 }

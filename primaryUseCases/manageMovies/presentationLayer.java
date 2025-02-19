@@ -24,8 +24,7 @@ public class presentationLayer {
             System.out.println("\033[1;32m1. Add Movie\033[0m");
             System.out.println("\033[1;32m2. Update Movie\033[0m");
             System.out.println("\033[1;32m3. Delete Movie\033[0m");
-            System.out.println("\033[1;32m4. Show Movies\033[0m");
-            System.out.println("\033[1;31m5. Return to Main Menu\033[0m");
+            System.out.println("\033[1;31m4. Return to Main Menu\033[0m");
             System.out.println();
             System.out.print("\033[1;33mEnter your choice: \033[0m");
 
@@ -45,9 +44,6 @@ public class presentationLayer {
                     businessLayer.deleteMovie(); // Call the business layer to delete a movie
                     break;
                 case 4:
-                    businessLayer.showMovies(); // Call the business layer to display all movies
-                    break;
-                case 5:
                     System.out.println("\n\033[1;33mReturning to main menu >>>\033[0m");
                     return; // Exit the application
                 default:
