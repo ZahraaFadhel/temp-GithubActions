@@ -5,9 +5,6 @@ The class ensures data integrity by validating movie attributes (e.g., IMDb rati
 It also provides functionality to filter and display movies based on specific criteria, such as language
 */
 
-
-package manageMovies;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,9 +2,6 @@
  * Utility class for ANSI escape codes to add colors to console output.
  * Used throughout the project for consistent and maintainable text styling.
  */
-
-
-package cmd;
  
 public class consoleColors {
     public static final String RESET = "\033[0m";  // Reset to default color

@@ -4,9 +4,6 @@ It interacts with the businessLayer to perform operations such as adding, updati
 The class provides a text-based menu-driven interface that allows users to select and execute these operations.
 */
 
-
-package manageMovies;
-
 import java.util.Scanner;
 
 public class presentationLayer {
@@ -16,26 +13,26 @@ public class presentationLayer {
     // Constructor to initialize the presentation layer
     public presentationLayer() {
         this.businessLayer = new businessLayer(); // Instantiate the business layer
-        this.scanner = new Scanner(System.in);    // Initialize the scanner for user input
+        this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 
     // Method to start the application and display the menu
     public void start() {
         while (true) {
             // Display the main menu with colored text for better readability
-            System.out.println("\n\033[1;34m--- Cinema Management System ---\033[0m");
+            System.out.println("\n\033[1;34m--- Manage Movies ---\033[0m");
             System.out.println("\033[1;32m1. Add Movie\033[0m");
             System.out.println("\033[1;32m2. Update Movie\033[0m");
             System.out.println("\033[1;32m3. Delete Movie\033[0m");
             System.out.println("\033[1;32m4. Show Movies\033[0m");
-            System.out.println("\033[1;31m5. Exit\033[0m");
+            System.out.println("\033[1;31m5. Return to Main Menu\033[0m");
             System.out.println();
             System.out.print("\033[1;33mEnter your choice: \033[0m");
-                        
+
             // Read the user's choice
             int choice = scanner.nextInt();
             scanner.nextLine();
-            
+
             // Perform the selected operation based on the user's choice
             switch (choice) {
                 case 1:
@@ -51,7 +48,7 @@ public class presentationLayer {
                     businessLayer.showMovies(); // Call the business layer to display all movies
                     break;
                 case 5:
-                    System.out.println("\033[1;31mExiting the system. Goodbye!\033[0m");
+                    System.out.println("\n\033[1;33mReturning to main menu >>>\033[0m");
                     return; // Exit the application
                 default:
                     System.out.println("\033[1;31mInvalid choice. Please try again.\033[0m");

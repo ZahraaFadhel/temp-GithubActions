@@ -4,9 +4,6 @@ It contains the core logic for managing movies, including adding, updating, dele
 This class ensures that business rules (e.g., validation, constraints) are enforced before interacting with the data layer.
 */
 
-
-package manageMovies;
-
 import java.util.Scanner;
 
 public class businessLayer {
