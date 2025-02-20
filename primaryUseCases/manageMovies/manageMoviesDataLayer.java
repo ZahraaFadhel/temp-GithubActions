@@ -8,11 +8,11 @@ It also provides functionality to filter and display movies based on specific cr
 import java.util.ArrayList;
 import java.util.List;
 
-public class dataLayer {
+public class manageMoviesDataLayer {
     private List<Movie> movies; // List to store all movies
 
     // Constructor to initialize the data layer with sample movies
-    public dataLayer() {
+    public manageMoviesDataLayer() {
         movies = new ArrayList<>();
         // Adding 4 sample movies for demonstration
         movies.add(new Movie("Inception", new String[]{"Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"}, 
@@ -35,19 +35,19 @@ public class dataLayer {
     // Method to add a movie to the list
     public boolean addMovie(Movie movie) {
         // Validate IMDb rating and duration before adding the movie
-        if (movie.getImdbRating() < 0 || movie.getImdbRating() > 10) {
-            System.out.println("\033[1;31mInvalid IMDb rating. Must be between 0 and 10.\033[0m");
+        if (movie.getImdbRating() < 1 || movie.getImdbRating() > 10) {
+            System.out.println(consoleColors.RED_BOLD + "Invalid IMDb rating. Must be between 1 and 10." + consoleColors.RESET);
             return false;
         }
         if (movie.getDuration() <= 0) {
-            System.out.println("\033[1;31mInvalid duration. Must be a positive value.\033[0m");
+            System.out.println(consoleColors.RED_BOLD + "Invalid duration. Must be a positive value." + consoleColors.RESET);
             return false;
         }
 
         // Check if a movie with the same title already exists
         for (Movie m : movies) {
             if (m.getTitle().equalsIgnoreCase(movie.getTitle())) {
-                System.out.println("\033[1;31mMovie with this title already exists.\033[0m");
+                System.out.println(consoleColors.RED_BOLD + "Movie with this title already exists." + consoleColors.RESET);
                 return false; // Movie already exists
             }
         }
@@ -76,7 +76,7 @@ public class dataLayer {
     // Method to display all movies or filter by language
     public void displayMovies(int option) {
         if (movies.isEmpty()) {
-            System.out.println("\033[1;31mNo movies available.\033[0m");
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
             return;
         }
 
@@ -125,7 +125,9 @@ public class dataLayer {
         // Override toString() to display movie details
         @Override
         public String toString() {
-            return "\033[1;32mTitle:\033[0m " + title + ", \033[1;34mLanguage:\033[0m " + language + ", \033[1;33mIMDb:\033[0m " + imdbRating;
+            return (consoleColors.GREEN_BOLD + "Title: " + consoleColors.RESET + title + 
+            consoleColors.BLUE_BOLD + ", Language: " + consoleColors.RESET + language + 
+            consoleColors.BLUE_BOLD + ", IMDb: " + consoleColors.RESET + imdbRating);
         }
     }
 }
