@@ -42,7 +42,6 @@ public class Main {
       // Process user input based on menu selection
       switch (choice) {
         case 1:
-          
         case 2:
           System.out.println("Booking Movies Use Case");
           return;
