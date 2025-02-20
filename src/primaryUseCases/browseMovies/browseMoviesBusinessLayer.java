@@ -8,8 +8,6 @@ This class ensures that business rules (e.g., validation, constraints) are enfor
 
 
 import java.util.Scanner;
-import src.helpers.consoleColors;
-import src.primaryUseCases.manageMovies.manageMoviesDataLayer;;
 
 public class browseMoviesBusinessLayer {
     private browseMoviesDataLayer dataLayer; // Reference to the data layer for interacting with movie data

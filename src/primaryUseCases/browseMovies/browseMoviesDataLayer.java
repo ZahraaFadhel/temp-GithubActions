@@ -1,32 +1,86 @@
 package src.primaryUseCases.browseMovies;
 
-import src.primaryUseCases.manageMovies.manageMoviesDataLayer;
+import java.util.List;
+import src.helpers.consoleColors;
+import src.dataStore;
+import src.dataStore.Movie;
 public class browseMoviesDataLayer {
-    private manageMoviesDataLayer dataLayer;
+    private dataStore dataStore;
 
     // Constructor to initialize with the existing dataLayer
-    public browseMoviesDataLayer(manageMoviesDataLayer dataLayer) {
-        this.dataLayer = dataLayer;
+    public browseMoviesDataLayer(dataStore ds) {
+        this.dataStore = ds;
+    }
+
+    public List<Movie> movies(){
+        return dataStore.getMovies();
     }
 
     // Method to browse all movies
     public void browseMovies() {
-        dataLayer.displayMovies(0); // Reuse the displayMovies method
+        if (movies().isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+          }
+      
+          // Display all movies
+          for (Movie movie : movies()) {
+            System.out.println(movie);
+          }
+          System.out.println();
     }
 
     // Method to search movies by title
     public void searchMoviesByTitle(String title) {
-        dataLayer.searchMoviesByTitle(title);
+        if (movies().isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+          }
+      
+          boolean found = false;
+      
+          // Display all movies
+          for (Movie movie : movies()) {
+            if (movie.getTitle().toLowerCase().contains(title.toLowerCase())) {
+              System.out.println(movie);
+              found = true;
+            }
+          }
+          if (!found) {
+            System.out.println(consoleColors.RED_BOLD + "No movies found with the title: " + title + consoleColors.RESET);
+          }
     }
 
     // Method to search movies by language
     public void searchMoviesByLanguage(String language) {
-        dataLayer.searchMoviesByLanguage(language);
+        if (movies().isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+          }
+      
+          // Display all movies
+          for (Movie movie : movies()) {
+            if (movie.getLanguage().toLowerCase().contains(language.toLowerCase())) {
+              System.out.println(movie);
+            }
+          }
+          System.out.println();
     }
 
     // Method to search movies by IMDb rating range
     public void searchMoviesByRating(double minRating, double maxRating) {
-        dataLayer.searchMoviesByRating(minRating, maxRating);
+        if (movies().isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+          }
+      
+          // Display all movies
+          for (Movie movie : movies()) {
+            if (movie.getImdbRating() >= minRating && movie.getImdbRating() <= maxRating) {
+              System.out.println(movie);
+            }
+          }
+          System.out.println();
     }
     
 }

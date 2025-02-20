@@ -19,18 +19,20 @@ import java.util.Scanner;
 import src.primaryUseCases.browseMovies.*;
 import src.primaryUseCases.manageMovies.*;
 import src.primaryUseCases.manageMovies.manageMoviesDataLayer;
+import src.dataStore;
 import src.helpers.consoleColors;
 
 public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-    manageMoviesDataLayer manageDataLayer = new manageMoviesDataLayer();
+    dataStore globalDataStore = new dataStore();
+    manageMoviesDataLayer manageDataLayer = new manageMoviesDataLayer(globalDataStore);
     manageMoviesBusinessLayer manageBusinessLayer = new manageMoviesBusinessLayer(manageDataLayer);
     manageMoviesPresentationLayer usecase4 = new manageMoviesPresentationLayer(manageBusinessLayer);
-    browseMoviesDataLayer browseDataLayer = new browseMoviesDataLayer(manageDataLayer);
+    browseMoviesDataLayer browseDataLayer = new browseMoviesDataLayer(globalDataStore);
     browseMoviesBusinessLayer businessLayer = new browseMoviesBusinessLayer(browseDataLayer);
     browseMoviesPresentationLayer usecase1 = new browseMoviesPresentationLayer(businessLayer);
-    
+
     while (true) {
       // Display the main menu options with colors
       System.out.println("\n" + consoleColors.CYAN_BOLD + "--- Cinema Management System ---" + consoleColors.RESET);
