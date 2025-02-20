@@ -13,8 +13,8 @@ public class manageMoviesPresentationLayer {
     private Scanner scanner; // Scanner object for reading user input from the console
 
     // Constructor to initialize the presentation layer
-    public manageMoviesPresentationLayer() {
-        this.businessLayer = new manageMoviesBusinessLayer(); // Instantiate the business layer
+    public manageMoviesPresentationLayer(manageMoviesBusinessLayer businessLayer) {
+        this.businessLayer = businessLayer; // Instantiate the business layer
         this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 
@@ -55,8 +55,8 @@ public class manageMoviesPresentationLayer {
     }
 
     // Main method to start the application
-    public static void main(String[] args) {
-        manageMoviesPresentationLayer app = new manageMoviesPresentationLayer(); // Create an instance of the presentation layer
-        app.start();
-    }
+    // public static void main(String[] args) {
+    //     manageMoviesPresentationLayer app = new manageMoviesPresentationLayer(); // Create an instance of the presentation layer
+    //     app.start();
+    // }
 }

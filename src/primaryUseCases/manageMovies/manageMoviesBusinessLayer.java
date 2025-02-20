@@ -14,8 +14,8 @@ public class manageMoviesBusinessLayer {
     private Scanner scanner; // Scanner object for reading user input from the console
 
     // Constructor to initialize the business layer
-    public manageMoviesBusinessLayer() {
-        this.dataLayer = new manageMoviesDataLayer(); // Instantiate the data layer
+    public manageMoviesBusinessLayer(manageMoviesDataLayer dataLayer) {
+        this.dataLayer = dataLayer; // Instantiate the data layer
         this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 

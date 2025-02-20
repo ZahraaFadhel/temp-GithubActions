@@ -95,13 +95,18 @@ public class manageMoviesDataLayer {
             return;
         }
 
+        boolean found = false;
+
         // Display all movies
         for (Movie movie : movies) {
             if (movie.getTitle().toLowerCase().contains(title.toLowerCase())) {
                 System.out.println(movie);
+                found = true;
             }
         }
-        System.out.println();
+        if(!found){
+            System.out.println(consoleColors.RED_BOLD + "No movies found with the title: " + title + consoleColors.RESET);
+        }
     }
 
     public void searchMoviesByLanguage(String language) {
