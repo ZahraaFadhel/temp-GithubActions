@@ -1,3 +1,4 @@
+package src.primaryUseCases.manageMovies;
 /*
 The dataLayer class is responsible for managing the data of movies in the Cinema Management System.
 It stores a list of Movie objects and provides methods to add, retrieve, delete, and display movies.
@@ -7,6 +8,7 @@ It also provides functionality to filter and display movies based on specific cr
 
 import java.util.ArrayList;
 import java.util.List;
+import src.helpers.consoleColors;
 
 public class manageMoviesDataLayer {
     private List<Movie> movies; // List to store all movies
@@ -87,6 +89,50 @@ public class manageMoviesDataLayer {
         System.out.println();
     }
 
+    public void searchMoviesByTitle(String title) {
+        if (movies.isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+        }
+
+        // Display all movies
+        for (Movie movie : movies) {
+            if (movie.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                System.out.println(movie);
+            }
+        }
+        System.out.println();
+    }
+
+    public void searchMoviesByLanguage(String language) {
+        if (movies.isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+        }
+
+        // Display all movies
+        for (Movie movie : movies) {
+            if (movie.getLanguage().toLowerCase().contains(language.toLowerCase())) {
+                System.out.println(movie);
+            }
+        }
+        System.out.println();
+    }
+
+    public void searchMoviesByRating(double minRating, double maxRating) {
+        if (movies.isEmpty()) {
+            System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
+            return;
+        }
+
+        // Display all movies
+        for (Movie movie : movies) {
+            if (movie.getImdbRating() >= minRating && movie.getImdbRating() <= maxRating) {
+                System.out.println(movie);
+            }
+        }
+        System.out.println();
+    }
     // Inner Movie class to represent a movie
     public static class Movie {
         private String title, summary, language, hallType;

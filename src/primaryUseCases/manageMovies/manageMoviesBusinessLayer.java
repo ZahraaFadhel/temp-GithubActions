@@ -1,3 +1,4 @@
+package src.primaryUseCases.manageMovies;
 /*
 The businessLayer class acts as the intermediary between the presentationLayer (user interface) and the dataLayer (data handling) in the Cinema Management System.
 It contains the core logic for managing movies, including adding, updating, deleting, and displaying movies.
@@ -6,6 +7,7 @@ This class ensures that business rules (e.g., validation, constraints) are enfor
 
 
 import java.util.Scanner;
+import src.helpers.consoleColors;
 
 public class manageMoviesBusinessLayer {
     private manageMoviesDataLayer dataLayer; // Reference to the data layer for interacting with movie data

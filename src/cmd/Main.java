@@ -1,3 +1,4 @@
+package src.cmd;
 /*
  * This is the main entry point for a cinema management system.
  * It provides users (customers & admins) with a menu to browse movies, book tickets, proceed to checkout,
@@ -15,11 +16,14 @@
  */
 
 import java.util.Scanner;
+import src.primaryUseCases.browseMovies.*;
+import src.primaryUseCases.manageMovies.*;
+import src.primaryUseCases.manageMovies.manageMoviesDataLayer;
+import src.helpers.consoleColors;
 
-public class main {
+public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-
     while (true) {
       // Display the main menu options with colors
       System.out.println("\n" + consoleColors.CYAN_BOLD + "--- Cinema Management System ---" + consoleColors.RESET);
@@ -38,8 +42,7 @@ public class main {
       // Process user input based on menu selection
       switch (choice) {
         case 1:
-          System.out.println("Browse Movies Use Case");
-          return;
+          
         case 2:
           System.out.println("Booking Movies Use Case");
           return;
@@ -48,8 +51,8 @@ public class main {
           return;
         case 4:
           // Navigate to the movie management section
-          manageMoviesPresentationLayer movieApp = new manageMoviesPresentationLayer();
-          movieApp.start();
+          manageMoviesPresentationLayer usecase4 = new manageMoviesPresentationLayer();
+          usecase4.start();
           break;
         case 5:
           // Exit the system
