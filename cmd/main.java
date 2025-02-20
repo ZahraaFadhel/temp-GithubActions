@@ -16,7 +16,7 @@
 
 import java.util.Scanner;
 
-public class Main {
+public class main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
 
@@ -48,7 +48,7 @@ public class Main {
           return;
         case 4:
           // Navigate to the movie management section
-          presentationLayer movieApp = new presentationLayer();
+          manageMoviesPresentationLayer movieApp = new manageMoviesPresentationLayer();
           movieApp.start();
           break;
         case 5:
