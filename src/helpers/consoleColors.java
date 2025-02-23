@@ -1,3 +1,5 @@
+package src.helpers;
+
 /**
  * Utility class for ANSI escape codes to add colors to console output.
  * Used throughout the project for consistent and maintainable text styling.
