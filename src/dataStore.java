@@ -1,28 +1,21 @@
-/*
-  The dataStore class manages the storage of movie data and cinema hall types.
-  It contains a list of movies currently available in the cinema and different hall types.
-
-    - The Movie inner class represents individual movies with attributes such as title, actors, language, and IMDb rating.
-    - The HallType inner class defines different types of cinema halls, including VIP and standard seating details.
-    - The class initializes sample movie and hall data for demonstration purposes.
-*/
-
 package src;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import src.helpers.consoleColors;
 
 public class dataStore {
   private static List<Movie> movies; // List to store all movies
+  private static List<Booking> bookings; // List to store all bookings
   private static List<HallType> halls; // List to store all hall types
 
-  // Constructor to initialize movies and hall types
   public dataStore() {
     movies = new ArrayList<>();
+    bookings = new ArrayList<>();
     halls = new ArrayList<>();
-
+    
     // Adding 4 sample movies for demonstration
     movies.add(new Movie("Inception", new String[] { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page" },
         "A thief who enters the dreams of others.", 13, 8.8, "English", 148,
@@ -40,21 +33,37 @@ public class dataStore {
         "The story of Islam's prophet Muhammad.", 13, 8.2, "Arabic", 178,
         new String[] { "1:00 PM", "4:00 PM", "7:00 PM", "10:00 PM" }, "Standard"));
 
-    // Initialize cinema halls
-    createHalls();
+    halls.add(new HallType("3D", 6.0));
+    halls.add(new HallType("VIP",  7.0));
+    halls.add(new HallType("IMAX",7.0));
+    halls.add(new HallType("Standard",3.5));
+
+       
+         // Adding sample bookings
+        bookings.add(new Booking(movies.get(0), "1:00 PM"));
+        bookings.add(new Booking(movies.get(1), "11:00 AM"));
+        bookings.add(new Booking(movies.get(2),  "12:00 PM"));
+        bookings.add(new Booking(movies.get(3),  "4:00 PM"));
   }
 
-  // Getter method to retrieve the list of movies
   public static List<Movie> getMovies() {
     return movies;
   }
 
-  // Setter method to update the list of movies
   public static void setMovies(List<Movie> m) {
     movies = m;
   }
+     // Getters and setters for bookings
+     public static List<Booking> getBookings() {
+      return bookings;
+  }
 
-  // Inner class representing a Movie
+  public static void setBookings(List<Booking> b) {
+      bookings = b;
+  }
+
+
+
   public static class Movie {
     private String title, summary, language, hallType;
     private String[] actors, showTimes;
@@ -75,7 +84,7 @@ public class dataStore {
       this.hallType = hallType;
     }
 
-    // Getter and setter methods for movie attributes
+    // Getters and setters for movie attributes
     public String getTitle() {
       return title;
     }
@@ -124,47 +133,97 @@ public class dataStore {
       this.duration = duration;
     }
 
-    // Override toString() to display movie details in a formatted manner
+    public String[] getShowTimes() {
+      return showTimes;
+  }
+
+  public String getHallType(){
+    return hallType;
+  }
+
+    // Override toString() to display movie details
     @Override
     public String toString() {
       return (consoleColors.GREEN_BOLD + "Title: " + consoleColors.RESET + title +
           consoleColors.BLUE_BOLD + ", Language: " + consoleColors.RESET + language +
-          consoleColors.BLUE_BOLD + ", IMDb: " + consoleColors.RESET + imdbRating);
+          consoleColors.BLUE_BOLD + ", IMDb: " + consoleColors.RESET + imdbRating) +
+          consoleColors.BLUE_BOLD + ", Showtimes: " + consoleColors.RESET + String.join(", ", showTimes);
     }
   }
 
+  public static class Booking {
+
+    private String bookingId;
+    private Movie movie;
+    private String hallType;
+    private String showTime; 
+
+    // Static variable to generate a unique booking ID
+    private static int idCounter = 1;  // Starts with "B001", increments with each new booking
+
+    // Constructor to initialize a booking object 
+    public Booking(Movie movie, String showTime) {
+        this.bookingId = generateBookingId();  // Automatically generate the ID
+        this.movie = movie;
+        this.hallType = movie.getHallType();
+        this.showTime = showTime;
+    }
+
+    // Method to generate booking IDs ("B001", "B002", "B003", etc.)
+    private String generateBookingId() {
+        return "B" + String.format("%03d", idCounter++);  // Increment the counter and return the formatted ID
+    }
+
+    // Getter for bookingId
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    // Getter for movie title
+    public String getMovieTitle() {
+        return movie.getTitle();
+    }
+
+    // Override toString() to display booking details
+    @Override
+    public String toString() {
+      double price = 0;
+      for (HallType h: halls){
+        if(movie.getHallType().equalsIgnoreCase(h.hallName)){
+          price = h.price;
+        }
+      }
+
+        return (consoleColors.GREEN_BOLD + "Booking ID: " + consoleColors.RESET + bookingId +
+                consoleColors.BLUE_BOLD + ", Movie Title: " + consoleColors.RESET + movie.getTitle() + 
+                consoleColors.BLUE_BOLD + ", Show time: " + consoleColors.RESET + showTime +
+                consoleColors.BLUE_BOLD + ", Hall Type: " + consoleColors.RESET + movie.hallType +
+                consoleColors.BLUE_BOLD + ", Hall Seat Price: " + consoleColors.RESET + price
+                );
+    }
+}
+
   // Inner class representing different hall types in the cinema
   public static class HallType {
-    private String hallName;
-    private int numVipSeats;
-    private double vipSeatPrice;
-    private int numStandardSeats;
-    private double standardSeatPrice;
+    public String hallName;
+    private double price;
 
     // Constructor to initialize hall details
-    public HallType(String hallName, int numVipSeats, double vipSeatPrice, int numStandardSeats, double standardSeatPrice) {
+    public HallType(String hallName, double price) {
       this.hallName = hallName;
-      this.numVipSeats = numVipSeats;
-      this.vipSeatPrice = vipSeatPrice;
-      this.numStandardSeats = numStandardSeats;
-      this.standardSeatPrice = standardSeatPrice;
+      this.price = price;
     }
 
     // Method to display hall details
     public void displayHallDetails() {
       System.out.println("Hall Type: " + hallName);
-      System.out.println("VIP Seats: " + numVipSeats + " | Price: " + vipSeatPrice + " BHD");
-      System.out.println("Standard Seats: " + numStandardSeats + " | Price: " + standardSeatPrice + " BHD");
+      System.out.println("Hall Price: " + price);
       System.out.println("--------------------------------------");
     }
-  }
 
-  // Method to initialize different hall types
-  public void createHalls() {
-    halls.add(new HallType("3D Hall", 15, 8.0, 30, 6.0));
-    halls.add(new HallType("VIP Hall", 10, 10.0, 20, 7.0));
-    halls.add(new HallType("IMAX Hall", 10, 9.0, 15, 7.0));
-    halls.add(new HallType("Standard Hall", 20, 6.0, 40, 3.5));
+    public String getHallName(){
+      return hallName;
+    }
   }
 
   // Getter method to retrieve the list of halls
@@ -177,11 +236,5 @@ public class dataStore {
     for (HallType hall : halls) {
       hall.displayHallDetails();
     }
-  }
-
-  // Main method to test the functionality
-  public static void main(String[] args) {
-    dataStore store = new dataStore(); // Create an instance of dataStore
-    displayAllHalls(); // Display details of all halls
   }
 }
