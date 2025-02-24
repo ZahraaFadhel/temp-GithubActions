@@ -2,13 +2,12 @@ package src.primaryUseCases.bookingMovies;
 
 import java.util.List;
 import java.util.Scanner;
-import src.helpers.consoleColors;
 import src.dataStore;
 import src.dataStore.Movie;
-import src.dataStore.Booking;
-import src.dataStore.HallType;
+import src.helpers.consoleColors;
 
 public class bookingBusinessLayer {
+
     private bookingDataLayer dataLayer;
     private Scanner scanner;
 
@@ -32,22 +31,20 @@ public class bookingBusinessLayer {
         List<Movie> movies = dataStore.getMovies();
         Movie selectedMovie = null; // Variable to store the matched hall type
 
-for (Movie m : movies) {
-    if (m.getTitle().equalsIgnoreCase(movieTitle)) {  // Use .equals() for String comparison
-        selectedMovie = m;
-        break;  // Exit loop once we find a match
-    }
-}
+        for (Movie m : movies) {
+            if (m.getTitle().equalsIgnoreCase(movieTitle)) {  // Use .equals() for String comparison
+                selectedMovie = m;
+                break;  // Exit loop once we find a match
+            }
+        }
 
-if(selectedMovie == null){
-    System.out.println("Invalid movie title.");
-    return;
-}
+        if (selectedMovie == null) {
+            System.out.println("Invalid movie title.");
+            return;
+        }
 
         System.out.print("Enter the showtime: ");
         String showTime = scanner.nextLine();
-
-
 
         // Check if the selected showtime exists
         boolean validShowtime = false;
@@ -63,9 +60,8 @@ if(selectedMovie == null){
             return;
         }
 
-
 // Check if a valid hall type was found before booking
-    dataLayer.bookMovie(selectedMovie, showTime);  // Pass selectedHall
+        dataLayer.bookMovie(selectedMovie, showTime);  // Pass selectedHall
     }
 
     // View all bookings

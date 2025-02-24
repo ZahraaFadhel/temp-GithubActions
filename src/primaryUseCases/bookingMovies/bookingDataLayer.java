@@ -1,14 +1,13 @@
 package src.primaryUseCases.bookingMovies;
+
 import java.util.List;
-import java.util.Scanner;
-import java.util.ArrayList;
-import src.helpers.consoleColors;
 import src.dataStore;
-import src.dataStore.Movie;
 import src.dataStore.Booking;
-import src.dataStore.HallType;
+import src.dataStore.Movie;
+import src.helpers.consoleColors;
 
 public class bookingDataLayer {
+
     private dataStore dataStore;
     private static List<Booking> bookings; // List to store bookings
 
@@ -24,7 +23,7 @@ public class bookingDataLayer {
     }
 
     // Retrieve all bookings from dataStore
-    public List<Booking> bookings(){
+    public List<Booking> bookings() {
         return dataStore.getBookings();
     }
 
@@ -34,7 +33,7 @@ public class bookingDataLayer {
         if (movie == null) {
             System.out.println(consoleColors.RED_BOLD + "Movie not found: " + movie.getTitle() + consoleColors.RESET);
             return;
-        } 
+        }
 
         // Generate a booking ID (e.g., "B001")
         // Create a new booking

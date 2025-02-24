@@ -1,24 +1,26 @@
 package src.primaryUseCases.manageMovies;
+
 /*
 The dataLayer class is responsible for managing the data of movies in the Cinema Management System.
 It stores a list of Movie objects and provides methods to add, retrieve, delete, and display movies.
 The class ensures data integrity by validating movie attributes (e.g., IMDb rating and duration) before adding them to the list.
 It also provides functionality to filter and display movies based on specific criteria, such as language
-*/
-
+ */
 import java.util.List;
 import src.dataStore;
 import src.dataStore.Movie;
 import src.helpers.consoleColors;
+
 public class manageMoviesDataLayer {
 
     private dataStore dataStore;
+
     // Constructor to initialize the data layer with sample movies
     public manageMoviesDataLayer(dataStore dataStore) {
         this.dataStore = dataStore;
     }
-    
-    public List<Movie> movies(){
+
+    public List<Movie> movies() {
         return dataStore.getMovies();
     }
 
