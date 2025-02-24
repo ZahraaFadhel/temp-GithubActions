@@ -1,19 +1,21 @@
+package src.primaryUseCases.manageMovies;
 /*
 The businessLayer class acts as the intermediary between the presentationLayer (user interface) and the dataLayer (data handling) in the Cinema Management System.
 It contains the core logic for managing movies, including adding, updating, deleting, and displaying movies.
 This class ensures that business rules (e.g., validation, constraints) are enforced before interacting with the data layer.
 */
 
-
 import java.util.Scanner;
+import src.helpers.consoleColors;
+import src.dataStore.Movie;
 
 public class manageMoviesBusinessLayer {
     private manageMoviesDataLayer dataLayer; // Reference to the data layer for interacting with movie data
     private Scanner scanner; // Scanner object for reading user input from the console
 
     // Constructor to initialize the business layer
-    public manageMoviesBusinessLayer() {
-        this.dataLayer = new manageMoviesDataLayer(); // Instantiate the data layer
+    public manageMoviesBusinessLayer(manageMoviesDataLayer dataLayer) {
+        this.dataLayer = dataLayer; // Instantiate the data layer
         this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 
@@ -85,7 +87,7 @@ public class manageMoviesBusinessLayer {
         String hallType = scanner.nextLine();
     
         // Create the new movie object
-        manageMoviesDataLayer.Movie movie = new manageMoviesDataLayer.Movie(title, actors, summary, ageRestriction, imdbRating, language, duration, showTimes, hallType);
+        Movie movie = new Movie(title, actors, summary, ageRestriction, imdbRating, language, duration, showTimes, hallType);
     
         // Add movie to the data layer
         if (dataLayer.addMovie(movie)) {
@@ -105,7 +107,7 @@ public class manageMoviesBusinessLayer {
         String title = scanner.nextLine();
     
         // Retrieve the movie from the data layer
-        manageMoviesDataLayer.Movie movie = dataLayer.getMovie(title);
+        Movie movie = dataLayer.getMovie(title);
         if (movie == null) {
             System.out.println(consoleColors.RED_BOLD + "Movie not found." + consoleColors.RESET);
             return;

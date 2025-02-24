@@ -1,3 +1,4 @@
+package src.primaryUseCases.manageMovies;
 /* 
 The presentationLayer class is part of the Cinema Management System and serves as the user interface for staff members to manage movies. 
 It interacts with the businessLayer to perform operations such as adding, updating, deleting, and displaying movies. 
@@ -5,15 +6,15 @@ The class provides a text-based menu-driven interface that allows users to selec
 */
 
 import java.util.Scanner;
-
+import src.helpers.consoleColors;
 
 public class manageMoviesPresentationLayer {
     private manageMoviesBusinessLayer businessLayer; // Reference to the business logic layer for handling movie operations
     private Scanner scanner; // Scanner object for reading user input from the console
 
     // Constructor to initialize the presentation layer
-    public manageMoviesPresentationLayer() {
-        this.businessLayer = new manageMoviesBusinessLayer(); // Instantiate the business layer
+    public manageMoviesPresentationLayer(manageMoviesBusinessLayer businessLayer) {
+        this.businessLayer = businessLayer; // Instantiate the business layer
         this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 
@@ -54,8 +55,8 @@ public class manageMoviesPresentationLayer {
     }
 
     // Main method to start the application
-    public static void main(String[] args) {
-        manageMoviesPresentationLayer app = new manageMoviesPresentationLayer(); // Create an instance of the presentation layer
-        app.start();
-    }
+    // public static void main(String[] args) {
+    //     manageMoviesPresentationLayer app = new manageMoviesPresentationLayer(); // Create an instance of the presentation layer
+    //     app.start();
+    // }
 }
