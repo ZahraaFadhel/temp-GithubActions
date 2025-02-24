@@ -1,4 +1,5 @@
 package src.cmd;
+
 /*
  * This is the main entry point for a cinema management system.
  * It provides users (customers & admins) with a menu to browse movies, book tickets, proceed to checkout,
@@ -14,74 +15,80 @@ package src.cmd;
  * 
  * The system uses the consoleColors class for colored terminal output.
  */
+import src.dataStore;
+import src.helpers.consoleColors;
+import src.helpers.validation;
+import src.primaryUseCases.bookingMovies.bookingBusinessLayer;
+import src.primaryUseCases.bookingMovies.bookingDataLayer;
+import src.primaryUseCases.bookingMovies.bookingPresentationLayer;
+import src.primaryUseCases.browseMovies.browseMoviesBusinessLayer;
+import src.primaryUseCases.browseMovies.browseMoviesDataLayer;
+import src.primaryUseCases.browseMovies.browseMoviesPresentationLayer;
+import src.primaryUseCases.checkout.checkoutBusinessLayer;
+import src.primaryUseCases.checkout.checkoutDataLayer;
+import src.primaryUseCases.checkout.checkoutPresentationLayer;
+import src.primaryUseCases.manageMovies.manageMoviesBusinessLayer;
+import src.primaryUseCases.manageMovies.manageMoviesDataLayer;
+import src.primaryUseCases.manageMovies.manageMoviesPresentationLayer;
 
- import java.util.Scanner;
- import src.primaryUseCases.browseMovies.*;
- import src.primaryUseCases.manageMovies.*;
- import src.dataStore;
- import src.helpers.consoleColors;
- import src.primaryUseCases.bookingMovies.bookingBusinessLayer;
- import src.primaryUseCases.bookingMovies.bookingDataLayer;
- import src.primaryUseCases.bookingMovies.bookingPresentationLayer;
- 
- public class Main {
-   public static void main(String[] args) {
-     Scanner scanner = new Scanner(System.in);
-     dataStore globalDataStore = new dataStore();
+public class Main {
 
-     manageMoviesDataLayer manageDataLayer = new manageMoviesDataLayer(globalDataStore);
-     manageMoviesBusinessLayer manageBusinessLayer = new manageMoviesBusinessLayer(manageDataLayer);
-     manageMoviesPresentationLayer usecase4 = new manageMoviesPresentationLayer(manageBusinessLayer);
+    public static void main(String[] args) {
+        dataStore globalDataStore = new dataStore();
 
-     browseMoviesDataLayer browseDataLayer = new browseMoviesDataLayer(globalDataStore);
-     browseMoviesBusinessLayer businessLayer = new browseMoviesBusinessLayer(browseDataLayer);
-     browseMoviesPresentationLayer usecase1 = new browseMoviesPresentationLayer(businessLayer);
+        // Initialize Booking Use Case
+        bookingDataLayer bookingDL = new bookingDataLayer(globalDataStore);
+        bookingBusinessLayer bookingBL = new bookingBusinessLayer(bookingDL);
+        bookingPresentationLayer bookingMovies = new bookingPresentationLayer(bookingBL);
 
-    bookingDataLayer bookingDataLayer = new bookingDataLayer(globalDataStore);
-    bookingBusinessLayer bookingBusinessLayer = new bookingBusinessLayer(bookingDataLayer);
-    bookingPresentationLayer bookingPresentationLayer = new bookingPresentationLayer(bookingBusinessLayer);
+        // Initialize Browsing Use Case
+        browseMoviesDataLayer browseDL = new browseMoviesDataLayer(globalDataStore);
+        browseMoviesBusinessLayer browseBL = new browseMoviesBusinessLayer(browseDL);
+        browseMoviesPresentationLayer browseMovies = new browseMoviesPresentationLayer(browseBL);
 
-     while (true) {
-       // Display the main menu options with colors
-       System.out.println("\n" + consoleColors.CYAN_BOLD + "--- Cinema Management System ---" + consoleColors.RESET);
-       System.out.println(consoleColors.GREEN_BOLD + "1. Browse Movies & Search" + consoleColors.RESET);
-       System.out.println(consoleColors.GREEN_BOLD + "2. Booking Movies" + consoleColors.RESET);
-       System.out.println(consoleColors.GREEN_BOLD + "3. Checkout" + consoleColors.RESET);
-       System.out.println(consoleColors.GREEN_BOLD + "4. Manage Movies" + consoleColors.RESET);
-       System.out.println(consoleColors.RED_BOLD + "5. Exit" + consoleColors.RESET);
-       System.out.println();
- 
-       // Prompt the user for input
-       System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
-       int choice = scanner.nextInt(); // Read user input
-       scanner.nextLine();
- 
-       // Process user input based on menu selection
-       switch (choice) {
-         case 1:
-         // Navigate to the browse movies section
-        
-         usecase1.start();
-         break;
-         case 2:
-           bookingPresentationLayer.start();
-           return;
-         case 3:
-           System.out.println("Checkout Use Case");
-           return;
-         case 4:
-           // Navigate to the movie management section
-           usecase4.start();
-           break;
-         case 5:
-           // Exit the system
-           System.out.println(consoleColors.RED_BOLD + "Exiting the system. Goodbye!" + consoleColors.RESET);
-           return;
-         default:
-           // Handle invalid input
-           System.out.println(consoleColors.RED_BOLD + "Invalid choice. Please try again." + consoleColors.RESET);
-       }
- 
-     }
-   }
- }
+        // Initialize Checkout Use Case
+        checkoutDataLayer checkoutDL = new checkoutDataLayer();
+        checkoutBusinessLayer checkoutBL = new checkoutBusinessLayer(checkoutDL);
+        checkoutPresentationLayer checkout = new checkoutPresentationLayer(checkoutBL);
+
+        // Initialize Movie Management Use Case
+        manageMoviesDataLayer manageDL = new manageMoviesDataLayer(globalDataStore);
+        manageMoviesBusinessLayer manageBL = new manageMoviesBusinessLayer(manageDL);
+        manageMoviesPresentationLayer manageMovies = new manageMoviesPresentationLayer(manageBL);
+
+        while (true) {
+            // Display the main menu options with colors
+            System.out.println("\n" + consoleColors.CYAN_BOLD + "--- Cinema Management System ---" + consoleColors.RESET);
+            System.out.println(consoleColors.GREEN_BOLD + "1. Browse Movies & Search" + consoleColors.RESET);
+            System.out.println(consoleColors.GREEN_BOLD + "2. Booking Movies" + consoleColors.RESET);
+            System.out.println(consoleColors.GREEN_BOLD + "3. Checkout" + consoleColors.RESET);
+            System.out.println(consoleColors.GREEN_BOLD + "4. Manage Movies" + consoleColors.RESET);
+            System.out.println(consoleColors.RED_BOLD + "5. Exit" + consoleColors.RESET);
+            System.out.println();
+
+            int choice = validation.getValidIntegerInput("Enter your choice: ");
+
+            if (choice < 1 || choice > 5) {
+                System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number." + consoleColors.RESET);
+                continue;
+            }
+
+            // Process user input based on menu selection
+            switch (choice) {
+                case 1 ->
+                    browseMovies.start();
+                case 2 ->
+                    bookingMovies.start();
+                case 3 ->
+                    checkout.start();
+                case 4 ->
+                    manageMovies.start();
+                case 5 -> {
+                    System.out.println(consoleColors.RED_BOLD + "Exiting the system. Goodbye!" + consoleColors.RESET);
+                    validation.closeScanner();
+                    return;
+                }
+            }
+        }
+    }
+}
