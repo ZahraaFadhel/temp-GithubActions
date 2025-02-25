@@ -10,7 +10,7 @@ package src.cmd;
  * - Browse and search for movies.
  * - Book tickets for movies.
  * - Checkout and complete booking.
- * - Manage movies through an admin interface.
+ * - Manage movies by adding, deleting and updating.
  * - Exit the system.
  * 
  * The system uses the consoleColors class for colored terminal output.

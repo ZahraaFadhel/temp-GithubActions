@@ -1,3 +1,10 @@
+/* 
+* This class acts as a data manager for a cinema booking system.
+It stores information about available movies, bookings, cinema halls, and discount codes.
+The class provides methods to add and retrieve data related to these entities, ensuring
+the smooth functioning of the booking system.
+*/
+
 package src;
 
 import java.util.ArrayList;
@@ -43,7 +50,7 @@ public class dataStore {
         halls.add(new HallType("IMAX", 7.0));
         halls.add(new HallType("Standard", 3.5));
 
-        // Adding sample bookings
+        // Adding 4 sample bookings
         bookings.add(new Booking(movies.get(0), "1:00 PM"));
         bookings.add(new Booking(movies.get(1), "11:00 AM"));
         bookings.add(new Booking(movies.get(2), "12:00 PM"));
@@ -60,6 +67,7 @@ public class dataStore {
         return movies;
     }
 
+    // Method to set the list of movies
     public static void setMovies(List<Movie> m) {
         movies = m;
     }

@@ -1,3 +1,9 @@
+/**
+ * This class serves as the data layer for handling movie bookings.
+ * It interacts with the dataStore to retrieve available movies and 
+ * manage booking operations such as creating, viewing, and canceling bookings.
+ */
+
 package src.primaryUseCases.bookingMovies;
 
 import java.util.List;

@@ -1,3 +1,9 @@
+/*
+* The businessLayer class acts as the intermediary between the presentationLayer (user interface) and the dataLayer (data handling) in the Cinema Management System.
+* It contains the core logic for booking movies, including booking a movie, view bookings and cancel a booking.
+* This class ensures that business rules (e.g., validation, constraints) are enforced before interacting with the data layer.
+*/
+
 package src.primaryUseCases.bookingMovies;
 
 import java.util.List;
@@ -60,7 +66,7 @@ public class bookingBusinessLayer {
             return;
         }
 
-// Check if a valid hall type was found before booking
+        // Check if a valid hall type was found before booking
         dataLayer.bookMovie(selectedMovie, showTime);  // Pass selectedHall
     }
 

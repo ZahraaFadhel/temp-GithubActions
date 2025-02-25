@@ -57,10 +57,4 @@ public class manageMoviesPresentationLayer {
             }
         }
     }
-
-    // Main method to start the application
-    // public static void main(String[] args) {
-    //     manageMoviesPresentationLayer app = new manageMoviesPresentationLayer(); // Create an instance of the presentation layer
-    //     app.start();
-    // }
 }

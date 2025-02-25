@@ -1,3 +1,9 @@
+/**
+ * This class represents the presentation layer for the movie booking system.
+ * It provides a user interface via the console for booking operations, 
+ * allowing users to book a movie, view bookings, and cancel a booking.
+ */
+
 package src.primaryUseCases.bookingMovies;
 
 import java.util.Scanner;
@@ -25,7 +31,6 @@ public class bookingPresentationLayer {
             System.out.println(consoleColors.GREEN_BOLD + "3. Cancel a Booking" + consoleColors.RESET);
             System.out.println(consoleColors.RED_BOLD + "4. Return to Main Menu" + consoleColors.RESET);
             System.out.println();
-            System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
 
             // Read the user's choice
             int choice = validation.getValidIntegerInput("Enter your choice: ");

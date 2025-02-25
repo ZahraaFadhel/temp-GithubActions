@@ -1,3 +1,9 @@
+/**
+ * This class represents the presentation layer for browsing and searching movies.
+ * It provides a console interface for accessing movies data, including browsing all movies,
+ * searching movies by title, language, and rating.
+ */
+
 package src.primaryUseCases.browseMovies;
 
 import java.util.Scanner;
@@ -28,7 +34,7 @@ public class browseMoviesPresentationLayer {
             System.out.println(consoleColors.RED_BOLD + "5. Return to Main Menu" + consoleColors.RESET);
             System.out.println();
             
-            // Read the user's choice
+            // Read the user's choice and validate it
             int choice = validation.getValidIntegerInput("Enter your choice: ");
 
             if (choice > 5 || choice < 1) {
@@ -68,6 +74,7 @@ public class browseMoviesPresentationLayer {
         System.out.println(consoleColors.YELLOW_BOLD + "Go Back? (y/n)" + consoleColors.RESET);
         System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
 
+        // Read the user's choice and validate it
         int choice = scanner.next().charAt(0);
         scanner.nextLine();
 
@@ -84,11 +91,4 @@ public class browseMoviesPresentationLayer {
         }
     }
 
-    // Main method to start the application
-    // public static void main(String[] args) {
-    //   manageMoviesDataLayer dataLayer = new manageMoviesDataLayer(); // Create an instance of the data layer
-    //   browseMoviesPresentationLayer app = new browseMoviesPresentationLayer(dataLayer); // Create an instance of the
-    //                                                                                     // presentation layer
-    //   app.start();
-    // }
 }
