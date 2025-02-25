@@ -68,8 +68,7 @@ public class checkoutPresentationLayer {
                     }
                 case 2:
                     System.out.println(consoleColors.YELLOW_BOLD + "Processing... \n" + consoleColors.RESET);
-                    printCheckoutMenu();
-                    continue;
+                   return;
                 case 3:
                     System.out.println(consoleColors.YELLOW_BOLD + "\nExiting the system. Goodbye!" + consoleColors.RESET);
                     System.exit(0);  // Exit the application
