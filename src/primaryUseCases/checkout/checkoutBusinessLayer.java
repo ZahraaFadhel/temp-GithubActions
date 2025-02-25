@@ -86,7 +86,7 @@ public class checkoutBusinessLayer {
             int choice = validation.getValidIntegerInput("Enter your choice: ");
 
             if (choice < 1 || choice > 2) {
-                System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
                 continue;
             }
 

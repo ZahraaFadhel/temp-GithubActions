@@ -7,7 +7,7 @@ The class provides a text-based menu-driven interface that allows users to selec
  */
 import java.util.Scanner;
 import src.helpers.consoleColors;
-
+import src.helpers.validation;
 public class manageMoviesPresentationLayer {
 
     private manageMoviesBusinessLayer businessLayer; // Reference to the business logic layer for handling movie operations
@@ -29,11 +29,14 @@ public class manageMoviesPresentationLayer {
             System.out.println(consoleColors.GREEN_BOLD + "3. Delete Movie" + consoleColors.RESET);
             System.out.println(consoleColors.RED_BOLD + "4. Return to Main Menu" + consoleColors.RESET);
             System.out.println();
-            System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
-
+            
             // Read the user's choice
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = validation.getValidIntegerInput("Enter your choice: ");
+
+            if (choice > 4 || choice < 1) {
+                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                continue;
+            }
 
             // Perform the selected operation based on the user's choice
             switch (choice) {

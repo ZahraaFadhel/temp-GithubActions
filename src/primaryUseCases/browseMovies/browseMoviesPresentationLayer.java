@@ -2,6 +2,7 @@ package src.primaryUseCases.browseMovies;
 
 import java.util.Scanner;
 import src.helpers.consoleColors;
+import src.helpers.validation;
 
 public class browseMoviesPresentationLayer {
 
@@ -26,11 +27,14 @@ public class browseMoviesPresentationLayer {
             System.out.println(consoleColors.GREEN_BOLD + "4. Search Movie by rating" + consoleColors.RESET);
             System.out.println(consoleColors.RED_BOLD + "5. Return to Main Menu" + consoleColors.RESET);
             System.out.println();
-            System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
-
+            
             // Read the user's choice
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = validation.getValidIntegerInput("Enter your choice: ");
+
+            if (choice > 5 || choice < 1) {
+                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                continue;
+            }
 
             // Perform the selected operation based on the user's choice
             switch (choice) {
@@ -52,7 +56,7 @@ public class browseMoviesPresentationLayer {
                     break;
                 case 5:
                     System.out.println(consoleColors.YELLOW_BOLD + "\nReturning to main menu >>>" + consoleColors.RESET);
-                    return; // Exit the application
+                    return;
                 default:
                     System.out.println(consoleColors.RED_BOLD + "Invalid choice. Please try again." + consoleColors.RESET);
             }
