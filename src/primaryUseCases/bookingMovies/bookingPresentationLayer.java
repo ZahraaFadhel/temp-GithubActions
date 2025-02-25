@@ -25,7 +25,12 @@ public class bookingPresentationLayer {
             System.out.println(consoleColors.RED_BOLD + "4. Exit" + consoleColors.RESET);
             System.out.println();
             System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
-
+            // Validate input to prevent InputMismatchException
+            if (!scanner.hasNextInt()) {
+                System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a number (1-4)." + consoleColors.RESET);
+                scanner.next(); // Consume the invalid input
+                continue; // Restart the loop
+            }
             // Read the user's choice
             int choice = scanner.nextInt();
             scanner.nextLine();  // Consume the newline character
@@ -57,7 +62,8 @@ public class bookingPresentationLayer {
     private void returnToMainMenu() {
         System.out.println(consoleColors.YELLOW_BOLD + "Go Back? (y/n)" + consoleColors.RESET);
         System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
-
+        
+        
         int choice = scanner.next().charAt(0);
         scanner.nextLine();
 
