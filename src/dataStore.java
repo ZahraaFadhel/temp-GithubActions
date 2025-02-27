@@ -19,6 +19,7 @@ public class dataStore {
     private static List<ValidDiscountCode> validDiscountCodes; // List to store valid discount codes
     private static SavedPaymentMethod savedPaymentMethod; // Single saved payment method
 
+    // The constructor initializes the lists and adds sample data
     public dataStore() {
         movies = new ArrayList<>();
         bookings = new ArrayList<>();

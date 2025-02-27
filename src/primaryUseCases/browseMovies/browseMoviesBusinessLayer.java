@@ -1,10 +1,10 @@
-package src.primaryUseCases.browseMovies;
-
 /*
 The businessLayer class acts as the intermediary between the presentationLayer (user interface) and the dataLayer (data handling) in the Cinema Management System.
 It contains the core logic for browsing movies and searching through them, including browse movies and searching by title, language and rating.
 This class ensures that business rules (e.g., validation, constraints) are enforced before interacting with the data layer.
  */
+
+package src.primaryUseCases.browseMovies;
 
 import java.util.Scanner;
 

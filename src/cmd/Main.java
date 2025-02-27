@@ -69,7 +69,7 @@ public class Main {
             int choice = validation.getValidIntegerInput("Enter your choice: ");
 
             if (choice < 1 || choice > 5) {
-                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number." + consoleColors.RESET);
+                System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number." + consoleColors.RESET);
                 continue;
             }
 
