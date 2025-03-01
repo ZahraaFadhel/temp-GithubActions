@@ -28,12 +28,24 @@ public class checkoutBusinessLayer {
     private final checkoutDataLayer dataLayer;
     private final Scanner scanner;
 
-    // Constructor to initialize the business layer
+    /**
+     * Constructor to initialize the business layer with the given data layer.
+     *
+     * @param dataLayer The checkout data layer that handles data-related
+     * operations.
+     */
     public checkoutBusinessLayer(checkoutDataLayer dataLayer) {
         this.dataLayer = dataLayer; // Instantiate the data layer
         this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 
+    /**
+     * Calculates the total price of all bookings in the provided list.
+     *
+     * @param bookings The list of bookings whose total price is to be
+     * calculated.
+     * @return The total price of all bookings.
+     */
     public static double calculateTotalPrice(List<Booking> bookings) {
         double total = 0;
         for (Booking booking : dataStore.getBookings()) {
@@ -42,6 +54,12 @@ public class checkoutBusinessLayer {
         return total;
     }
 
+    /**
+     * Prompts the user to enter a discount code and validates it.
+     *
+     * @return The valid discount code entered by the user, or an empty string
+     * if no discount code is entered.
+     */
     public String ApplyDiscountCode() {
         while (true) {
             System.out.print(consoleColors.YELLOW_BOLD + "Enter discount code (or press Enter to skip):" + consoleColors.RESET);
@@ -71,13 +89,29 @@ public class checkoutBusinessLayer {
         }
     }
 
+    /**
+     * Applies the given discount code to the price and returns the discounted
+     * price.
+     *
+     * @param discountCode The discount code to apply.
+     * @param price The original price to apply the discount to.
+     * @return The price after applying the discount.
+     */
     public double ApplyDiscountCode(String discountCode, double price) {
         double discountPercentage = dataLayer.getDiscountPercentageByCode(discountCode);
         return price * (1 - discountPercentage / 100);
     }
 
+    /**
+     * Prompts the user to proceed to checkout, allowing them to choose between
+     * using a saved payment method or entering a new one.
+     *
+     * @return true if the user successfully proceeds to checkout, false
+     * otherwise.
+     */
     public boolean proceedToCheckout() {
         while (true) {
+            System.out.println();
             System.out.println(consoleColors.GREEN_BOLD + "1. Use a saved payment method" + consoleColors.RESET);
             System.out.println(consoleColors.GREEN_BOLD + "2. Use a new payment method" + consoleColors.RESET);
 
@@ -102,6 +136,12 @@ public class checkoutBusinessLayer {
         }
     }
 
+    /**
+     * Handles the use of a saved payment method, if available.
+     *
+     * @return true if the saved payment method is used successfully, false
+     * otherwise.
+     */
     private boolean handleSavedPaymentMethod() {
         SavedPaymentMethod savedPaymentMethod = dataStore.getSavedPaymentMethod();
         if (savedPaymentMethod != null) {
@@ -114,6 +154,12 @@ public class checkoutBusinessLayer {
         return false;
     }
 
+    /**
+     * Handles the use of a new payment method by validating user input for card
+     * details.
+     *
+     * @return true if the new payment method is processed successfully.
+     */
     private boolean handleNewPaymentMethod() {
         System.out.print(consoleColors.GREEN_BOLD + "Enter Card Type (Visa/MasterCard): " + consoleColors.RESET);
         String cardType;
@@ -171,6 +217,9 @@ public class checkoutBusinessLayer {
         return handleSavePaymentMethodResponse(cardType, cardholderName, cardNumber, expiryDate, cvv);
     }
 
+    /**
+     * Prompts the user to continue with the checkout process.
+     */
     private void promptForCheckout() {
         System.out.println(consoleColors.YELLOW_BOLD + "+-----------------+");
         System.out.println("|    CHECKOUT     |");
@@ -179,6 +228,16 @@ public class checkoutBusinessLayer {
         scanner.nextLine();
     }
 
+    /**
+     * Handles the user's response to save a new payment method.
+     *
+     * @param cardType The card type (e.g., Visa or MasterCard).
+     * @param cardholderName The cardholder's name.
+     * @param cardNumber The card number.
+     * @param expiryDate The card expiry date.
+     * @param cvv The card CVV.
+     * @return true if the payment method is processed successfully.
+     */
     private boolean handleSavePaymentMethodResponse(String cardType, String cardholderName, String cardNumber, String expiryDate, String cvv) {
         System.out.println(consoleColors.YELLOW_BOLD + "Do you want to save this payment method? (yes/no)" + consoleColors.RESET);
         System.out.println(consoleColors.RED_BOLD + "Note: Previous saved method will be replaced." + consoleColors.RESET);
@@ -192,3 +251,5 @@ public class checkoutBusinessLayer {
     }
 
 }
+
+
