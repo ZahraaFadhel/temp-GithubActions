@@ -1,4 +1,4 @@
-package src.tests.checkoutTesting;
+package tests.checkoutTesting;
 
 public class testCheckoutDL {
     
