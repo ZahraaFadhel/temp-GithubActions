@@ -1,4 +1,4 @@
-package tests.testBrowsing;
+package tests.browseMoviesTesting;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +9,7 @@ import src.dataStore.Movie;
 import java.util.List;
 import java.util.ArrayList;
 
-public class testBrowsingDL {
+public class testBrowsingDL  {
 
     private dataStore sampleDataStore;
     private browseMoviesDataLayer DL;
@@ -18,35 +18,30 @@ public class testBrowsingDL {
     // This method is executed before each test
     @Before
     public void setUp() {
+
+        // constructor already initializes the sample data
+
         sampleDataStore = new dataStore();
-        List<Movie> sampleMovies = new ArrayList<>();
-
-        sampleMovies.add(new Movie("Inception", new String[] { "Leonardo DiCaprio" },
-                "A mind-bending thriller", 13, 8.8, "English", 148, new String[] { "12:00 PM", "6:00 PM" }, "IMAX"));
-
-        sampleMovies.add(new Movie("Parasite", new String[] { "Song Kang-ho" },
-                "A dark satire of social inequality", 15, 8.6, "Korean", 132, new String[] { "2:00 PM", "8:00 PM" },
-                "Standard"));
-
-        sampleMovies.add(new Movie("Interstellar", new String[] { "Matthew McConaughey" },
-                "A sci-fi epic exploring space and time", 10, 8.7, "English", 169,
-                new String[] { "4:00 PM", "10:00 PM" }, "4DX"));
-
-        sampleMovies.add(new Movie("Amélie", new String[] { "Audrey Tautou" },
-                "A whimsical romantic comedy", 12, 8.3, "French", 122, new String[] { "5:00 PM", "9:00 PM" },
-                "Standard"));
-
-        sampleDataStore.setMovies(sampleMovies);
         DL = new browseMoviesDataLayer(sampleDataStore);
     }
 
-    // Testing the data layer methods
+    // TESTING DATA LAYER METHODS
 
     // Testing the retrieval of all movies
     @Test
     public void testRetrieveAllMovies() {
+        // 4 is the number of movies in the sample data
         List<Movie> movies = DL.movies();
         Assert.assertEquals(4, movies.size());
+    }
+
+    // Testing the browsing of all movies
+    @Test
+    public void testBrowseMovies() {
+        int displayedMoviesSize = DL.browseMovies();
+
+        // Expecting all movies to be displayed
+        Assert.assertEquals(displayedMoviesSize, DL.movies().size());
     }
 
     // Testing the retrieval of a single movie by title

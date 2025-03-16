@@ -52,7 +52,7 @@ public class checkoutPresentationLayer {
         while (true) {
 
             // Read the user's choice
-            int choice = validation.getValidIntegerInput("Enter your choice: ");
+            int choice = validation.getValidIntegerInput("Enter your choice: ", scanner);
 
             if (choice > 3 || choice < 1) {
                 System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);

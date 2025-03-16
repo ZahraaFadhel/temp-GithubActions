@@ -82,7 +82,7 @@ public class checkoutBusinessLayer {
             System.out.println(consoleColors.GREEN_BOLD + "2. Use a new payment method" + consoleColors.RESET);
 
             // Read the user's choice
-            int choice = validation.getValidIntegerInput("Enter your choice: ");
+            int choice = validation.getValidIntegerInput("Enter your choice: ", scanner);
 
             if (choice < 1 || choice > 2) {
                 System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);

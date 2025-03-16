@@ -13,32 +13,30 @@ public class validation {
         return input.matches("^[a-zA-Z0-9_-]+$");
     }
 
-    private static final Scanner scanner = new Scanner(System.in);
-
     /**
      * Gets a valid integer input from the user, handling invalid inputs.
      * @param prompt The message displayed to the user before input.
      * @return A valid integer entered by the user.
      */
-    public static int getValidIntegerInput(String prompt) {
+    public static int getValidIntegerInput(String prompt, Scanner scanner) {
         int number;
+        
         while (true) {
             System.out.print(consoleColors.YELLOW_BOLD + prompt + consoleColors.RESET);
             if (scanner.hasNextInt()) {
                 number = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
                 return number;
             } else {
                 System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
-                scanner.nextLine(); // Clear the invalid input
             }
         }
+        
     }
 
     /*
      * Closes the scanner resource. Call this before exiting the program.
      */
-    public static void closeScanner() {
-        scanner.close();
+    public static void closeScanner(Scanner sc) {
+        sc.close();
     }
 }
