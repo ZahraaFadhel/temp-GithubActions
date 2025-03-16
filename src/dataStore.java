@@ -3,7 +3,8 @@
 It stores information about available movies, bookings, cinema halls, and discount codes.
 The class provides methods to add and retrieve data related to these entities, ensuring
 the smooth functioning of the booking system.
- */
+*/
+
 package src;
 
 import java.util.ArrayList;
@@ -18,11 +19,14 @@ public class dataStore {
     private static List<ValidDiscountCode> validDiscountCodes; // List to store valid discount codes
     private static SavedPaymentMethod savedPaymentMethod; // Single saved payment method
 
+    // The constructor initializes the lists and adds sample data
     public dataStore() {
         movies = new ArrayList<>();
         bookings = new ArrayList<>();
         halls = new ArrayList<>();
         validDiscountCodes = new ArrayList<>();
+
+        // Initialize the saved payment method
         savedPaymentMethod = new SavedPaymentMethod("MasterCard", "Manar Alshaikh", "8765 4321 8765 4321", "09/26", "456");
 
         // Adding 4 sample movies for demonstration
@@ -393,6 +397,16 @@ public class dataStore {
                     + consoleColors.GREEN_BOLD + ", Cardholder Name: " + consoleColors.RESET + cardholderName
                     + consoleColors.GREEN_BOLD + ", Card Number: " + consoleColors.RESET + cardNumber
                     + consoleColors.GREEN_BOLD + ", Expiry Date: " + consoleColors.RESET + expiryDate);
+        }
+    }
+
+    // Method to display the saved payment method
+    public static void displayPaymentMethod() {
+        if (savedPaymentMethod != null) {
+            System.out.println("Saved Payment Method: ");
+            System.out.println(savedPaymentMethod.toString());
+        } else {
+            System.out.println(consoleColors.RED_BOLD + "No payment method saved." + consoleColors.RESET);
         }
     }
 

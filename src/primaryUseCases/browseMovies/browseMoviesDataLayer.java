@@ -25,17 +25,20 @@ public class browseMoviesDataLayer {
     }
 
     // Method to browse all movies
-    public void browseMovies() {
+    public int browseMovies() {
+        int counter = 0;
         if (movies().isEmpty()) {
             System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
-            return;
+            return 0;
         }
 
         // Display all movies
         for (Movie movie : movies()) {
             System.out.println(movie);
+            counter++;
         }
         System.out.println();
+        return counter;
     }
 
     // Method to search movies by title
