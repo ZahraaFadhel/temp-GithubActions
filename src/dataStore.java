@@ -187,54 +187,55 @@ public class dataStore {
         private Movie movie;
         private String hallType;
         private String showTime;
-
+        private double price; // Price is now initialized in the constructor
+    
         // Static variable to generate a unique booking ID
         private static int idCounter = 1;  // Starts with "B001", increments with each new booking
-
+    
         // Constructor to initialize a booking object 
         public Booking(Movie movie, String showTime) {
             this.bookingId = generateBookingId();  // Automatically generate the ID
             this.movie = movie;
             this.hallType = movie.getHallType();
             this.showTime = showTime;
+    
+            // Calculate and set the price based on the hall type
+            for (HallType h : halls) {
+                if (movie.getHallType().equalsIgnoreCase(h.hallName)) {
+                    this.price = h.price;
+                    break; // Exit the loop once the correct hall type is found
+                }
+            }
         }
-
+    
         // Method to generate booking IDs ("B001", "B002", "B003", etc.)
         private String generateBookingId() {
             return "B" + String.format("%03d", idCounter++);  // Increment the counter and return the formatted ID
         }
-
+    
         // Getter for bookingId
         public String getBookingId() {
             return bookingId;
         }
-
+    
         // Getter for movie title
         public String getMovieTitle() {
             return movie.getTitle();
         }
-
-        double price = 0;
-
+    
+        // Getter for booking price
+        public double getBookingPrice() {
+            return price;
+        }
+    
         // Override toString() to display booking details
         @Override
         public String toString() {
-            for (HallType h : halls) {
-                if (movie.getHallType().equalsIgnoreCase(h.hallName)) {
-                    this.price = h.price;
-                }
-            }
-
             return (consoleColors.GREEN_BOLD + "Booking ID: " + consoleColors.RESET + bookingId
                     + consoleColors.BLUE_BOLD + ", Movie Title: " + consoleColors.RESET + movie.getTitle()
                     + consoleColors.BLUE_BOLD + ", Show time: " + consoleColors.RESET + showTime
                     + consoleColors.BLUE_BOLD + ", Hall Type: " + consoleColors.RESET + movie.hallType
                     + consoleColors.BLUE_BOLD + ", Hall Seat Price: " + consoleColors.RESET + price);
-        }
-
-        // Getter for booking price
-        public double getBookingPrice() {
-            return price;
         }
     }
 
