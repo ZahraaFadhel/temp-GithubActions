@@ -25,14 +25,6 @@ public class browseMoviesBusinessLayer {
         return dataLayer.browseMovies();
     }
 
-    // public void searchMoviesByTitle() {
-    //     System.out.print("Enter the title to search for: ");
-        
-    //     scanner = new Scanner(System.in); // Ensure it's reading from updated System.in
-    //     String title = scanner.nextLine();
-    //     dataLayer.searchMoviesByTitle(title);
-    // }
-
     // To display movies containing a specific keyword
     public void searchMoviesByTitle(Scanner sc) {
         System.out.print("Enter the title to search for: ");

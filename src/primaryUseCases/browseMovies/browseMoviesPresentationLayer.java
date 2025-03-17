@@ -48,13 +48,10 @@ public class browseMoviesPresentationLayer {
             // Read the user's choice and validate it
             int choice = validation.getValidIntegerInput("Enter your choice: ", scanner);
 
-            // System.out.println("Enter your choice: ");
-            // int choice = scanner.nextInt();
             scanner.nextLine();
 
             if (choice > 5 || choice < 1) {
-                System.out.print(
-                        consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
                 continue;
             }
 
@@ -62,8 +59,6 @@ public class browseMoviesPresentationLayer {
             switch (choice) {
                 case 1:
                     businessLayer.displayMovies(); // Call the business layer to display Movies
-                    // returnToMainMenu(); // Prompt the user to return to the main menu
-                    // break;
                     return;
                 case 2:
                     businessLayer.searchMoviesByTitle(this.scanner); // Call the business layer
@@ -80,7 +75,7 @@ public class browseMoviesPresentationLayer {
                 case 5:
                     System.out
                             .println(consoleColors.YELLOW_BOLD + "\nReturning to main menu >>>" + consoleColors.RESET);
-                    return;
+                        return;
                 default:
                     System.out.println(
                             consoleColors.RED_BOLD + "Invalid choice. Please try again." + consoleColors.RESET);
