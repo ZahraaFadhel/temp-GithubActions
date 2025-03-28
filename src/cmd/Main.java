@@ -54,8 +54,8 @@ public class Main {
         // Initialize Movie Management Use Case
         manageMoviesDataLayer manageDL = new manageMoviesDataLayer(globalDataStore);
         manageMoviesBusinessLayer manageBL = new manageMoviesBusinessLayer(manageDL);
-        manageMoviesPresentationLayer manageMovies = new manageMoviesPresentationLayer(manageBL);
         Scanner sc = new Scanner(System.in);
+        manageMoviesPresentationLayer manageMovies = new manageMoviesPresentationLayer(manageBL, sc);
 
         while (true) {
             // Display the main menu options with colors
