@@ -245,6 +245,11 @@ public class dataStore {
         public double getBookingPrice() {
             return price;
         }
+
+        public Object getShowtime() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getShowtime'");
+        }
     }
 
     // Inner class representing different hall types in the cinema

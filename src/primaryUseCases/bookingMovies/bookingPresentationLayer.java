@@ -23,6 +23,7 @@ public class bookingPresentationLayer {
 
     // Method to start the application and display the menu
     public void start() {
+        scanner = new Scanner(System.in);
         while (true) {
             // Display the main menu for booking operations
             System.out.println(consoleColors.BLUE_BOLD + "\n--- Movie Booking ---" + consoleColors.RESET);
@@ -43,17 +44,17 @@ public class bookingPresentationLayer {
             // Perform the selected operation based on the user's choice
             switch (choice) {
                 case 1:
-                    businessLayer.bookMovie();  // Call business layer to book a movie
-                    break;
+                    businessLayer.bookMovie(this.scanner);  // Call business layer to book a movie
+                    return;
                 case 2:
                     businessLayer.viewBookings();  // Call business layer to view all bookings
-                    break;
+                    return;
                 case 3:
-                    businessLayer.cancelBooking();  // Call business layer to cancel a booking
-                    break;
+                    businessLayer.cancelBooking(this.scanner);  // Call business layer to cancel a booking
+                    return;
                 case 4:
-                System.out.println(consoleColors.YELLOW_BOLD + "\nReturning to main menu >>>" + consoleColors.RESET);
-                return;
+                    System.out.println(consoleColors.YELLOW_BOLD + "\nReturning to main menu >>>" + consoleColors.RESET);
+                    return;
                 default:
                     System.out.println(consoleColors.RED_BOLD + "Invalid choice. Please try again." + consoleColors.RESET);
             }
