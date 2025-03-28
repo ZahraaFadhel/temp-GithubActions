@@ -1,3 +1,8 @@
+/**
+ * This class represents the data layer for browsing movies in the system.
+ * It interacts with the dataStore to retrieve and search for movies based on criteria: title, language and rating.
+ */
+
 package src.primaryUseCases.browseMovies;
 
 import java.util.List;
@@ -14,22 +19,26 @@ public class browseMoviesDataLayer {
         this.dataStore = ds;
     }
 
+    // Retrieve all movies from dataStore
     public List<Movie> movies() {
         return dataStore.getMovies();
     }
 
     // Method to browse all movies
-    public void browseMovies() {
+    public int browseMovies() {
+        int counter = 0;
         if (movies().isEmpty()) {
             System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
-            return;
+            return 0;
         }
 
         // Display all movies
         for (Movie movie : movies()) {
             System.out.println(movie);
+            counter++;
         }
         System.out.println();
+        return counter;
     }
 
     // Method to search movies by title
@@ -41,7 +50,7 @@ public class browseMoviesDataLayer {
 
         boolean found = false;
 
-        // Display all movies
+        // Display movies contaning entred input
         for (Movie movie : movies()) {
             if (movie.getTitle().toLowerCase().contains(title.toLowerCase())) {
                 System.out.println(movie);
@@ -60,7 +69,7 @@ public class browseMoviesDataLayer {
             return;
         }
 
-        // Display all movies
+        // Display movies with matching language
         for (Movie movie : movies()) {
             if (movie.getLanguage().toLowerCase().contains(language.toLowerCase())) {
                 System.out.println(movie);
@@ -76,7 +85,7 @@ public class browseMoviesDataLayer {
             return;
         }
 
-        // Display all movies
+        // Display movies within the rating range
         for (Movie movie : movies()) {
             if (movie.getImdbRating() >= minRating && movie.getImdbRating() <= maxRating) {
                 System.out.println(movie);

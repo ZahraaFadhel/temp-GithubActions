@@ -1,3 +1,10 @@
+/* 
+* This class acts as a data manager for a cinema booking system.
+It stores information about available movies, bookings, cinema halls, and discount codes.
+The class provides methods to add and retrieve data related to these entities, ensuring
+the smooth functioning of the booking system.
+*/
+
 package src;
 
 import java.util.ArrayList;
@@ -12,6 +19,7 @@ public class dataStore {
     private static List<ValidDiscountCode> validDiscountCodes; // List to store valid discount codes
     private static SavedPaymentMethod savedPaymentMethod; // Single saved payment method
 
+    // The constructor initializes the lists and adds sample data
     public dataStore() {
         movies = new ArrayList<>();
         bookings = new ArrayList<>();
@@ -43,7 +51,7 @@ public class dataStore {
         halls.add(new HallType("IMAX", 7.0));
         halls.add(new HallType("Standard", 3.5));
 
-        // Adding sample bookings
+        // Adding 4 sample bookings
         bookings.add(new Booking(movies.get(0), "1:00 PM"));
         bookings.add(new Booking(movies.get(1), "11:00 AM"));
         bookings.add(new Booking(movies.get(2), "12:00 PM"));
@@ -60,6 +68,7 @@ public class dataStore {
         return movies;
     }
 
+    // Method to set the list of movies
     public static void setMovies(List<Movie> m) {
         movies = m;
     }
@@ -237,6 +246,17 @@ public class dataStore {
                     + consoleColors.BLUE_BOLD + ", Hall Type: " + consoleColors.RESET + movie.hallType
                     + consoleColors.BLUE_BOLD + ", Hall Seat Price: " + consoleColors.RESET + price);
         }
+
+        // Getter for booking price
+        public double getBookingPrice() {
+            return price;
+        }
+
+        public Object getShowtime() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getShowtime'");
+        }
+
     }
 
     // Inner class representing different hall types in the cinema

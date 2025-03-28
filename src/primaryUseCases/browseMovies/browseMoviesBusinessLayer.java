@@ -1,10 +1,11 @@
-package src.primaryUseCases.browseMovies;
-
 /*
 The businessLayer class acts as the intermediary between the presentationLayer (user interface) and the dataLayer (data handling) in the Cinema Management System.
-It contains the core logic for managing movies, including adding, updating, deleting, and displaying movies.
+It contains the core logic for browsing movies and searching through them, including browse movies and searching by title, language and rating.
 This class ensures that business rules (e.g., validation, constraints) are enforced before interacting with the data layer.
  */
+
+package src.primaryUseCases.browseMovies;
+
 import java.util.Scanner;
 
 public class browseMoviesBusinessLayer {
@@ -18,28 +19,42 @@ public class browseMoviesBusinessLayer {
         this.scanner = new Scanner(System.in); // Initialize the scanner for user input
     }
 
-    public void displayMovies() {
+    // To display available movies
+    public int displayMovies() {
         System.out.println("Here are the movies available:");
-        dataLayer.browseMovies();
+        return dataLayer.browseMovies();
     }
 
-    public void searchMoviesByTitle() {
+    // public void searchMoviesByTitle() {
+    //     System.out.print("Enter the title to search for: ");
+        
+    //     scanner = new Scanner(System.in); // Ensure it's reading from updated System.in
+    //     String title = scanner.nextLine();
+    //     dataLayer.searchMoviesByTitle(title);
+    // }
+
+    // To display movies containing a specific keyword
+    public void searchMoviesByTitle(Scanner sc) {
         System.out.print("Enter the title to search for: ");
-        String title = scanner.nextLine();
+        String title = sc.nextLine(); // Use nextLine() to read the entire input
         dataLayer.searchMoviesByTitle(title);
     }
 
-    public void searchMoviesByLanguage() {
+    // To display movies with a specific language
+    public void searchMoviesByLanguage(Scanner sc) {
         System.out.print("Enter the language to search for: ");
-        String language = scanner.nextLine();
+        String language = sc.nextLine();
         dataLayer.searchMoviesByLanguage(language);
     }
 
-    public void searchMoviesByRating() {
+    // To display movies within a range of ratings
+    public void searchMoviesByRating(Scanner sc) {
         System.out.print("Enter the minimum IMDb rating: ");
-        double minRating = scanner.nextDouble();
+        double minRating = sc.nextDouble();
+
         System.out.print("Enter the maximum IMDb rating: ");
-        double maxRating = scanner.nextDouble();
+        double maxRating = sc.nextDouble();
+        
         dataLayer.searchMoviesByRating(minRating, maxRating);
     }
 }

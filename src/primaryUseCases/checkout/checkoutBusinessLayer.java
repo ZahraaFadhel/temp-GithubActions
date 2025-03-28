@@ -84,7 +84,6 @@ public class checkoutBusinessLayer {
         while (true) {
             System.out.println(consoleColors.GREEN_BOLD + "1. Use a saved payment method" + consoleColors.RESET);
             System.out.println(consoleColors.GREEN_BOLD + "2. Use a new payment method" + consoleColors.RESET);
-            System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
 
             // Read the user's choice
             if (scanner.hasNextLine()) {

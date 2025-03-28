@@ -52,10 +52,10 @@ public class checkoutPresentationLayer {
         while (true) {
 
             // Read the user's choice
-            int choice = validation.getValidIntegerInput("Enter your choice: ");
+            int choice = validation.getValidIntegerInput("Enter your choice: ", scanner);
 
             if (choice > 3 || choice < 1) {
-                System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
                 continue;
             }
 
@@ -67,6 +67,7 @@ public class checkoutPresentationLayer {
                     System.out.println(consoleColors.YELLOW_BOLD + "Processing... \n" + consoleColors.RESET);
                     returnToMainMenu();
                         return;
+
                 case 3:
                     System.out.println(consoleColors.YELLOW_BOLD + "\nExiting the system. Goodbye!" + consoleColors.RESET);
                     System.exit(0);  // Exit the application

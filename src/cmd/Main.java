@@ -10,7 +10,7 @@ package src.cmd;
  * - Browse and search for movies.
  * - Book tickets for movies.
  * - Checkout and complete booking.
- * - Manage movies through an admin interface.
+ * - Manage movies by adding, deleting and updating.
  * - Exit the system.
  * 
  * The system uses the consoleColors class for colored terminal output.
@@ -30,7 +30,7 @@ import src.primaryUseCases.checkout.checkoutPresentationLayer;
 import src.primaryUseCases.manageMovies.manageMoviesBusinessLayer;
 import src.primaryUseCases.manageMovies.manageMoviesDataLayer;
 import src.primaryUseCases.manageMovies.manageMoviesPresentationLayer;
-
+import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
@@ -54,7 +54,8 @@ public class Main {
         // Initialize Movie Management Use Case
         manageMoviesDataLayer manageDL = new manageMoviesDataLayer(globalDataStore);
         manageMoviesBusinessLayer manageBL = new manageMoviesBusinessLayer(manageDL);
-        manageMoviesPresentationLayer manageMovies = new manageMoviesPresentationLayer(manageBL);
+        Scanner sc = new Scanner(System.in);
+        manageMoviesPresentationLayer manageMovies = new manageMoviesPresentationLayer(manageBL, sc);
 
         while (true) {
             // Display the main menu options with colors
@@ -66,7 +67,7 @@ public class Main {
             System.out.println(consoleColors.RED_BOLD + "5. Exit" + consoleColors.RESET);
             System.out.println();
 
-            int choice = validation.getValidIntegerInput("Enter your choice: ");
+            int choice = validation.getValidIntegerInput("Enter your choice: ", sc);
 
             if (choice < 1 || choice > 5) {
                 System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number." + consoleColors.RESET);
@@ -85,7 +86,7 @@ public class Main {
                     manageMovies.start();
                 case 5 -> {
                     System.out.println(consoleColors.RED_BOLD + "Exiting the system. Goodbye!" + consoleColors.RESET);
-                    validation.closeScanner();
+                    validation.closeScanner(sc);
                     return;
                 }
             }

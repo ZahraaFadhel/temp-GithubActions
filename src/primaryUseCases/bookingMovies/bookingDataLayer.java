@@ -1,3 +1,9 @@
+/**
+ * This class serves as the data layer for handling movie bookings.
+ * It interacts with the dataStore to retrieve available movies and 
+ * manage booking operations such as creating, viewing, and canceling bookings.
+ */
+
 package src.primaryUseCases.bookingMovies;
 
 import java.util.List;
@@ -28,11 +34,11 @@ public class bookingDataLayer {
     }
 
     // Method to book a movie
-    public void bookMovie(Movie movie, String showTime) {
+    public String bookMovie(Movie movie, String showTime) {
 
         if (movie == null) {
             System.out.println(consoleColors.RED_BOLD + "Movie not found: " + movie.getTitle() + consoleColors.RESET);
-            return;
+            return "";
         }
 
         // Generate a booking ID (e.g., "B001")
@@ -45,18 +51,22 @@ public class bookingDataLayer {
         System.out.println(consoleColors.BLUE_BOLD + "Movie: " + consoleColors.RESET + movie.getTitle());
         System.out.println(consoleColors.BLUE_BOLD + "Showtime: " + consoleColors.RESET + showTime);
         System.out.println(consoleColors.BLUE_BOLD + "Hall Type: " + consoleColors.RESET + movie.getHallType());
+        return newBooking.getBookingId();
     }
 
     // Method to view all bookings
-    public void viewBookings() {
+    public int viewBookings() {
+        int counter = 0;
         if (bookings.isEmpty()) {
             System.out.println(consoleColors.RED_BOLD + "No bookings available." + consoleColors.RESET);
-            return;
+            return 0;
         }
 
         for (Booking booking : bookings) {
             System.out.println(booking);
+            counter++;
         }
+        return counter;
     }
 
     // Method to cancel a booking

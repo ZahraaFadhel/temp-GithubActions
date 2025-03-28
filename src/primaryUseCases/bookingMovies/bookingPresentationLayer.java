@@ -1,7 +1,14 @@
+/**
+ * This class represents the presentation layer for the movie booking system.
+ * It provides a user interface via the console for booking operations, 
+ * allowing users to book a movie, view bookings, and cancel a booking.
+ */
+
 package src.primaryUseCases.bookingMovies;
 
 import java.util.Scanner;
 import src.helpers.consoleColors;
+import src.helpers.validation;
 
 public class bookingPresentationLayer {
 
@@ -16,34 +23,38 @@ public class bookingPresentationLayer {
 
     // Method to start the application and display the menu
     public void start() {
+        scanner = new Scanner(System.in);
         while (true) {
             // Display the main menu for booking operations
             System.out.println(consoleColors.BLUE_BOLD + "\n--- Movie Booking ---" + consoleColors.RESET);
             System.out.println(consoleColors.GREEN_BOLD + "1. Book a Movie" + consoleColors.RESET);
             System.out.println(consoleColors.GREEN_BOLD + "2. View All Bookings" + consoleColors.RESET);
             System.out.println(consoleColors.GREEN_BOLD + "3. Cancel a Booking" + consoleColors.RESET);
-            System.out.println(consoleColors.RED_BOLD + "4. Exit" + consoleColors.RESET);
+            System.out.println(consoleColors.RED_BOLD + "4. Return to Main Menu" + consoleColors.RESET);
             System.out.println();
-            System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
 
             // Read the user's choice
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume the newline character
+            int choice = validation.getValidIntegerInput("Enter your choice: ", scanner);
+
+            if (choice > 4 || choice < 1) {
+                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                continue;
+            }
 
             // Perform the selected operation based on the user's choice
             switch (choice) {
                 case 1:
-                    businessLayer.bookMovie();  // Call business layer to book a movie
-                    break;
+                    businessLayer.bookMovie(this.scanner);  // Call business layer to book a movie
+                    return;
                 case 2:
                     businessLayer.viewBookings();  // Call business layer to view all bookings
-                    break;
+                    return;
                 case 3:
-                    businessLayer.cancelBooking();  // Call business layer to cancel a booking
-                    break;
+                    businessLayer.cancelBooking(this.scanner);  // Call business layer to cancel a booking
+                    return;
                 case 4:
-                    System.out.println(consoleColors.YELLOW_BOLD + "\nExiting the system. Goodbye!" + consoleColors.RESET);
-                    return;  // Exit the application
+                    System.out.println(consoleColors.YELLOW_BOLD + "\nReturning to main menu >>>" + consoleColors.RESET);
+                    return;
                 default:
                     System.out.println(consoleColors.RED_BOLD + "Invalid choice. Please try again." + consoleColors.RESET);
             }
@@ -57,7 +68,8 @@ public class bookingPresentationLayer {
     private void returnToMainMenu() {
         System.out.println(consoleColors.YELLOW_BOLD + "Go Back? (y/n)" + consoleColors.RESET);
         System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
-
+        
+        
         int choice = scanner.next().charAt(0);
         scanner.nextLine();
 
