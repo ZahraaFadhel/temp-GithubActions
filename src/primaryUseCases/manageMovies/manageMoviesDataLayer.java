@@ -4,8 +4,9 @@ package src.primaryUseCases.manageMovies;
 The dataLayer class is responsible for managing the data of movies in the Cinema Management System.
 It stores a list of Movie objects and provides methods to add, retrieve, delete, and display movies.
 The class ensures data integrity by validating movie attributes (e.g., IMDb rating and duration) before adding them to the list.
-It also provides functionality to filter and display movies based on specific criteria, such as language
- */
+It also provides functionality to filter and display movies based on specific criteria, such as language.
+*/
+
 import java.util.List;
 import src.dataStore;
 import src.dataStore.Movie;
@@ -20,8 +21,9 @@ public class manageMoviesDataLayer {
         this.dataStore = dataStore;
     }
 
-    public List<Movie> movies() {
-        return dataStore.getMovies();
+    // Method to retrieve all movies
+    public List<Movie> getMovies() {
+        return dataStore.getMovies(); // Return the list of movies from dataStore
     }
 
     // Method to add a movie to the list
@@ -37,7 +39,7 @@ public class manageMoviesDataLayer {
         }
 
         // Check if a movie with the same title already exists
-        for (Movie m : movies()) {
+        for (Movie m : getMovies()) {
             if (m.getTitle().equalsIgnoreCase(movie.getTitle())) {
                 System.out.println(consoleColors.RED_BOLD + "Movie with this title already exists." + consoleColors.RESET);
                 return false; // Movie already exists
@@ -45,15 +47,15 @@ public class manageMoviesDataLayer {
         }
 
         // Add the movie to the list
-        movies().add(movie);
+        getMovies().add(movie);
         return true;
     }
 
     // Method to retrieve a movie by title
     public Movie getMovie(String title) {
-        for (Movie movie : movies()) {
+        for (Movie movie : getMovies()) {
             if (movie.getTitle().equalsIgnoreCase(title)) {
-                return movie;
+                return movie; // Return the movie if found
             }
         }
         return null; // Movie not found
@@ -62,21 +64,20 @@ public class manageMoviesDataLayer {
     // Method to delete a movie by title or substring
     public boolean deleteMovie(String title) {
         // Remove movies whose titles contain the given substring (case-insensitive)
-        return movies().removeIf(movie -> movie.getTitle().toLowerCase().contains(title.toLowerCase()));
+        return getMovies().removeIf(movie -> movie.getTitle().toLowerCase().contains(title.toLowerCase()));
     }
 
     // Method to display all movies or filter by language
     public void displayMovies(int option) {
-        if (movies().isEmpty()) {
+        if (getMovies().isEmpty()) {
             System.out.println(consoleColors.RED_BOLD + "No movies available." + consoleColors.RESET);
             return;
         }
 
         // Display all movies
-        for (Movie movie : movies()) {
+        for (Movie movie : getMovies()) {
             System.out.println(movie);
         }
         System.out.println();
     }
-
 }
