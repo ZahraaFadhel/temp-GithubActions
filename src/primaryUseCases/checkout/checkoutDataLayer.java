@@ -39,7 +39,7 @@ public class checkoutDataLayer {
 // Method to check if a discount code is valid, ignoring case
     public boolean isValidDiscountCode(String code) {
         for (ValidDiscountCode discountCode : src.dataStore.getValidDiscountCodes()) {
-            if (discountCode.getCode().equalsIgnoreCase(code)) {
+            if (discountCode.getCode().equalsIgnoreCase(code.trim())) {
                 return true;
             }
         }
@@ -48,7 +48,7 @@ public class checkoutDataLayer {
 
     public int getDiscountPercentageByCode(String discountCode) {
         for (ValidDiscountCode validCode : src.dataStore.getValidDiscountCodes()) {
-            if (validCode.getCode().equalsIgnoreCase(discountCode)) {
+            if (validCode.getCode().equalsIgnoreCase(discountCode.trim())) {
                 return validCode.getPercentage();  // Return the discount percentage
             }
         }
@@ -65,22 +65,37 @@ public class checkoutDataLayer {
     }
 
     public static boolean isValidCardType(String cardType) {
+        if (cardType == null) {
+            return false; // Null is not a valid card type
+        }
         return cardType.equalsIgnoreCase("Visa") || cardType.equalsIgnoreCase("MasterCard");
     }
-
+    
     public static boolean isValidCardholderName(String name) {
+        if (name == null) {
+            return false; // Null is not a valid name
+        }
         return name.matches("^[a-zA-Z ]+$"); // Only letters and spaces allowed
     }
-
+    
     public static boolean isValidCardNumber(String cardNumber) {
+        if (cardNumber == null) {
+            return false; // Null is not a valid card number
+        }
         return cardNumber.matches("^\\d{16}$"); // Exactly 16 digits
     }
-
+    
     public static boolean isValidExpiryDate(String expiryDate) {
+        if (expiryDate == null) {
+            return false; // Null is not a valid expiry date
+        }
         return expiryDate.matches("^(0[1-9]|1[0-2])/(\\d{2})$"); // MM/YY format (01-12/YY)
     }
-
+    
     public static boolean isValidCVV(String cvv) {
-        return cvv.matches("^\\d{3}$"); // Exactly 3 digits (0-9)
+        if (cvv == null) {
+            return false; // Null is not a valid CVV
+        }
+        return cvv.trim().matches("^\\d{3}$"); // Exactly 3 digits (0-9)
     }
 }

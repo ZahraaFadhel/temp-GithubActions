@@ -22,7 +22,6 @@ import src.dataStore.Booking;
 import src.dataStore.SavedPaymentMethod;
 import src.helpers.consoleColors;
 import src.helpers.validation;
-
 public class checkoutBusinessLayer {
 
     private final checkoutDataLayer dataLayer;
@@ -45,27 +44,32 @@ public class checkoutBusinessLayer {
     public String ApplyDiscountCode() {
         while (true) {
             System.out.print(consoleColors.YELLOW_BOLD + "Enter discount code (or press Enter to skip):" + consoleColors.RESET);
-            String discountCode = scanner.nextLine().trim();
-            if (!discountCode.isEmpty()) {
-                String[] words = discountCode.split("\\s+");
-                int wordCount = words.length;
-                if (wordCount != 1) {
-                    System.out.println(consoleColors.RED_BOLD
-                            + "Error: The discount code should consist of a single word, try again. (No spaces)"
-                            + consoleColors.RESET);
-                } else if (!validation.isValidString(discountCode)) {
-                    System.out.println(consoleColors.RED_BOLD
-                            + "Error: The discount code contains invalid characters. (Only letters, digits, hyphens, and underscores) are allowed."
-                            + consoleColors.RESET);
-                } else if (!dataLayer.isValidDiscountCode(discountCode)) {
-                    System.out.println(consoleColors.RED_BOLD
-                            + "Error: The discount code does not exist, try another one, try again."
-                            + consoleColors.RESET);
+            if (scanner.hasNextLine()) {
+                String discountCode = scanner.nextLine().trim();
+                if (!discountCode.isEmpty()) {
+                    String[] words = discountCode.split("\\s+");
+                    int wordCount = words.length;
+                    if (wordCount != 1) {
+                        System.out.println(consoleColors.RED_BOLD
+                                + "Error: The discount code should consist of a single word, try again. (No spaces)"
+                                + consoleColors.RESET);
+                    } else if (!validation.isValidString(discountCode)) {
+                        System.out.println(consoleColors.RED_BOLD
+                                + "Error: The discount code contains invalid characters. (Only letters, digits, hyphens, and underscores) are allowed."
+                                + consoleColors.RESET);
+                    } else if (!dataLayer.isValidDiscountCode(discountCode)) {
+                        System.out.println(consoleColors.RED_BOLD
+                                + "Error: The discount code does not exist, try another one, try again."
+                                + consoleColors.RESET);
+                    } else {
+                        return discountCode;
+                    }
                 } else {
-                    return discountCode;
+                    // No discount code entered, proceed without applying a discount
+                    return "";
                 }
             } else {
-                // No discount code entered, proceed without applying a discount
+                // No input available (for testing purposes)
                 return "";
             }
         }
@@ -82,22 +86,31 @@ public class checkoutBusinessLayer {
             System.out.println(consoleColors.GREEN_BOLD + "2. Use a new payment method" + consoleColors.RESET);
 
             // Read the user's choice
-            int choice = validation.getValidIntegerInput("Enter your choice: ", scanner);
+            if (scanner.hasNextLine()) {
+                String input = scanner.nextLine().trim();
+                try {
+                    int choice = Integer.parseInt(input);
+                    if (choice < 1 || choice > 2) {
+                        System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
+                        continue;
+                    }
 
-            if (choice < 1 || choice > 2) {
-                System.out.print(consoleColors.RED_BOLD + "Invalid input. Please enter a valid number.\n" + consoleColors.RESET);
-                continue;
-            }
-
-            switch (choice) {
-                case 1 -> {
-                    return handleSavedPaymentMethod();
+                    switch (choice) {
+                        case 1 -> {
+                            return handleSavedPaymentMethod();
+                        }
+                        case 2 -> {
+                            return handleNewPaymentMethod();
+                        }
+                        default ->
+                            System.out.println(consoleColors.RED_BOLD + "Error: Wrong input, try again." + consoleColors.RESET);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(consoleColors.RED_BOLD + "Invalid input. Please enter a number.\n" + consoleColors.RESET);
                 }
-                case 2 -> {
-                    return handleNewPaymentMethod();
-                }
-                default ->
-                    System.out.println(consoleColors.RED_BOLD + "Error: Wrong input, try again." + consoleColors.RESET);
+            } else {
+                // No input available (for testing purposes)
+                return false;
             }
         }
     }
@@ -118,51 +131,76 @@ public class checkoutBusinessLayer {
         System.out.print(consoleColors.GREEN_BOLD + "Enter Card Type (Visa/MasterCard): " + consoleColors.RESET);
         String cardType;
         while (true) {
-            cardType = scanner.nextLine().trim();
-            if (checkoutDataLayer.isValidCardType(cardType)) {
-                break;
+            if (scanner.hasNextLine()) {
+                cardType = scanner.nextLine().trim();
+                if (checkoutDataLayer.isValidCardType(cardType)) {
+                    break;
+                }
+                System.out.println(consoleColors.RED_BOLD + "Invalid card type. Please enter Visa or MasterCard." + consoleColors.RESET);
+            } else {
+                // No input available (for testing purposes)
+                return false;
             }
-            System.out.println(consoleColors.RED_BOLD + "Invalid card type. Please enter Visa or MasterCard." + consoleColors.RESET);
         }
 
         System.out.print(consoleColors.GREEN_BOLD + "Enter Cardholder Name: " + consoleColors.RESET);
         String cardholderName;
         while (true) {
-            cardholderName = scanner.nextLine().trim();
-            if (checkoutDataLayer.isValidCardholderName(cardholderName)) {
-                break;
+            if (scanner.hasNextLine()) {
+                cardholderName = scanner.nextLine().trim();
+                if (checkoutDataLayer.isValidCardholderName(cardholderName)) {
+                    break;
+                }
+                System.out.println(consoleColors.RED_BOLD + "Invalid name. Only letters and spaces are allowed." + consoleColors.RESET);
+            } else {
+                // No input available (for testing purposes)
+                return false;
             }
-            System.out.println(consoleColors.RED_BOLD + "Invalid name. Only letters and spaces are allowed." + consoleColors.RESET);
         }
 
         System.out.print(consoleColors.GREEN_BOLD + "Enter Card Number: " + consoleColors.RESET);
         String cardNumber;
         while (true) {
-            cardNumber = scanner.nextLine().trim();
-            if (checkoutDataLayer.isValidCardNumber(cardNumber)) {
-                break;
+            if (scanner.hasNextLine()) {
+                cardNumber = scanner.nextLine().trim();
+                if (checkoutDataLayer.isValidCardNumber(cardNumber)) {
+                    break;
+                }
+                System.out.println(consoleColors.RED_BOLD + "Invalid card number. It must be exactly 16 digits." + consoleColors.RESET);
+            } else {
+                // No input available (for testing purposes)
+                return false;
             }
-            System.out.println(consoleColors.RED_BOLD + "Invalid card number. It must be exactly 16 digits." + consoleColors.RESET);
         }
 
         System.out.print(consoleColors.GREEN_BOLD + "Enter Expiry Date (MM/YY): " + consoleColors.RESET);
         String expiryDate;
         while (true) {
-            expiryDate = scanner.nextLine().trim();
-            if (checkoutDataLayer.isValidExpiryDate(expiryDate)) {
-                break;
+            if (scanner.hasNextLine()) {
+                expiryDate = scanner.nextLine().trim();
+                if (checkoutDataLayer.isValidExpiryDate(expiryDate)) {
+                    break;
+                }
+                System.out.println(consoleColors.RED_BOLD + "Invalid expiry date. Format must be MM/YY." + consoleColors.RESET);
+            } else {
+                // No input available (for testing purposes)
+                return false;
             }
-            System.out.println(consoleColors.RED_BOLD + "Invalid expiry date. Format must be MM/YY." + consoleColors.RESET);
         }
 
         System.out.print(consoleColors.GREEN_BOLD + "Enter CVV: " + consoleColors.RESET);
         String cvv;
         while (true) {
-            cvv = scanner.nextLine().trim();
-            if (checkoutDataLayer.isValidCVV(cvv)) {
-                break;
+            if (scanner.hasNextLine()) {
+                cvv = scanner.nextLine().trim();
+                if (checkoutDataLayer.isValidCVV(cvv)) {
+                    break;
+                }
+                System.out.println(consoleColors.RED_BOLD + "Invalid CVV. It must be exactly 3 digits." + consoleColors.RESET);
+            } else {
+                // No input available (for testing purposes)
+                return false;
             }
-            System.out.println(consoleColors.RED_BOLD + "Invalid CVV. It must be exactly 3 digits." + consoleColors.RESET);
         }
 
         promptForCheckout();
@@ -176,19 +214,24 @@ public class checkoutBusinessLayer {
         System.out.println("|    CHECKOUT     |");
         System.out.println("+-----------------+");
         System.out.println("Press ENTER to continue..." + consoleColors.RESET);
-        scanner.nextLine();
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
     }
 
     private boolean handleSavePaymentMethodResponse(String cardType, String cardholderName, String cardNumber, String expiryDate, String cvv) {
         System.out.println(consoleColors.YELLOW_BOLD + "Do you want to save this payment method? (yes/no)" + consoleColors.RESET);
         System.out.println(consoleColors.RED_BOLD + "Note: Previous saved method will be replaced." + consoleColors.RESET);
-        String response = scanner.nextLine().trim().toLowerCase();
-
-        if (response.equals("yes")) {
-            SavedPaymentMethod newPaymentMethod = new SavedPaymentMethod(cardType, cardholderName, cardNumber, expiryDate, cvv);
-            dataStore.updatePaymentMethod(newPaymentMethod);
+        if (scanner.hasNextLine()) {
+            String response = scanner.nextLine().trim().toLowerCase();
+            if (response.equals("yes")) {
+                SavedPaymentMethod newPaymentMethod = new SavedPaymentMethod(cardType, cardholderName, cardNumber, expiryDate, cvv);
+                dataStore.updatePaymentMethod(newPaymentMethod);
+            }
+            return true;
+        } else {
+            // No input available (for testing purposes)
+            return false;
         }
-        return true;
     }
-
 }
