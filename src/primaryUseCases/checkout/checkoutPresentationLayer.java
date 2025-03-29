@@ -62,13 +62,12 @@ public class checkoutPresentationLayer {
             // Perform the selected operation based on the user's choice
             switch (choice) {
                 case 1:
-                    if (businessLayer.proceedToCheckout()) {
-                        returnToMainMenu();
-                        return;
-                    }
+                    businessLayer.proceedToCheckout();
                 case 2:
                     System.out.println(consoleColors.YELLOW_BOLD + "Processing... \n" + consoleColors.RESET);
-                   return;
+                    returnToMainMenu();
+                        return;
+
                 case 3:
                     System.out.println(consoleColors.YELLOW_BOLD + "\nExiting the system. Goodbye!" + consoleColors.RESET);
                     System.exit(0);  // Exit the application
@@ -84,7 +83,7 @@ public class checkoutPresentationLayer {
     }
 
     // Method to prompt the user to return to the main menu
-    private void returnToMainMenu() {
+    public void returnToMainMenu() {
         System.out.println(consoleColors.YELLOW_BOLD + "Go Back? (y/n)" + consoleColors.RESET);
         System.out.print(consoleColors.YELLOW_BOLD + "Enter your choice: " + consoleColors.RESET);
 
