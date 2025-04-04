@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class testManageBL {
+public class testManageBL {
     private manageMoviesDataLayer dataLayer;
     private manageMoviesBusinessLayer businessLayer;
     private dataStore store;

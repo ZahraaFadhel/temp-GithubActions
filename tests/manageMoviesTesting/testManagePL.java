@@ -13,7 +13,7 @@ import java.util.Scanner;
 import src.primaryUseCases.manageMovies.*;
 
 
-class testManagePL {
+public class testManagePL {
     private manageMoviesPresentationLayer presentationLayer;
     private manageMoviesBusinessLayer businessLayer;
 

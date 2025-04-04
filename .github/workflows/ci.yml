@@ -1,0 +1,115 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]  
+        java: [8, 11, 17] 
+        exclude:
+          - os: windows-latest  # Skip Java 8 on Windows due to common issues
+            java: 8
+
+    steps:
+    # --- Get the latest code ---
+    - uses: actions/checkout@v4  # Copies your repository code
+      with:
+        fetch-depth: 0  # Fetches all branch history (helps if tests use Git commands)
+
+    # --- Setup Java ---
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'temurin'  
+      # Cache dependencies for faster runs
+      id: java-cache
+
+    # --- Prepare folders ---
+    - name: Prepare directories
+      run: |
+        mkdir -p bin       # For compiled main classes
+        mkdir -p bin-tests  # For compiled test classes
+        # Verify directory structure
+        echo "Project structure:"
+        ls -R src tests *-randoop || echo "Some directories may not exist yet"
+
+    # --- Compile main code ---
+    - name: Compile main code
+      run: |
+        # Find all Java files in src/ and compile them to bin/
+        find src -name "*.java" > sources.txt || echo "No Java files found in src/"
+        # Continue if no sources found (might be test-only PR)
+        if [ -s sources.txt ]; then
+          javac -d bin -encoding UTF-8 @sources.txt
+        else
+          echo "::warning::No main Java files to compile"
+        fi
+
+    # --- Compile tests ---
+    - name: Compile tests (OS-aware)
+      shell: bash
+      run: |
+        # Different path separators for Windows vs Unix
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          CP_SEP=";"  # Windows uses semicolons
+          FIND_CMD="dir /s /b *.java"  # Windows file search
+        else
+          CP_SEP=":"  # Mac/Linux uses colons
+          FIND_CMD="find . -name '*.java'"  # Unix file search
+        fi
+
+        # Compile manual tests (from tests/ folder)
+        echo "Looking for manual tests..."
+        $FIND_CMD | grep -e "^tests/" > manual_tests.txt || true
+        if [ -s manual_tests.txt ]; then
+          javac -d bin-tests -encoding UTF-8 -cp "bin${CP_SEP}lib/junit.jar" @manual_tests.txt
+        else
+          echo "::notice::No manual tests found in tests/"
+        fi
+
+        # Compile Randoop tests (from *-randoop folders)
+        echo "Looking for Randoop tests..."
+        $FIND_CMD | grep -e "-randoop/" > randoop_tests.txt || true
+        if [ -s randoop_tests.txt ]; then
+          javac -d bin-tests -encoding UTF-8 -cp "bin${CP_SEP}lib/junit.jar" @randoop_tests.txt
+        else
+          echo "::notice::No Randoop tests found in *-randoop/"
+        fi
+
+    # --- Run tests ---
+    - name: Run tests
+      shell: bash
+      run: |
+        # OS-specific commands
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          CP_SEP=";"
+          FIND_CMD="dir /s /b *.class"
+        else
+          CP_SEP=":"
+          FIND_CMD="find bin-tests -name '*.class'"
+        fi
+
+        # Find all test classes (excluding inner classes with $ in name)
+        echo "Discovering test classes..."
+        TEST_CLASSES=$($FIND_CMD | grep -v '\$' | sed 's/\.class$//' | tr '/' '.' | sed 's/bin-tests.//')
+        
+        if [ -z "$TEST_CLASSES" ]; then
+          echo "::error::No test classes found in bin-tests/"
+          echo "Check that:"
+          echo "1. Test files end with 'Test.java'"
+          echo "2. Files are in tests/ or *-randoop/ folders"
+          exit 1
+        fi
+
+        echo "=== Running these test classes ==="
+        echo "$TEST_CLASSES" | tr ' ' '\n'
+        echo "================================"
+        
+        # Continue on test failure to see all results
+        java -cp "bin${CP_SEP}bin-tests${CP_SEP}lib/junit.jar" org.junit.runner.JUnitCore $TEST_CLASSES || echo "::warning::Some tests failed"

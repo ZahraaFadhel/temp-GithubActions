@@ -14,7 +14,7 @@ import src.primaryUseCases.manageMovies.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class testManageDL {
+public class testManageDL {
     private manageMoviesDataLayer dataLayer;
     private dataStore store;
 
