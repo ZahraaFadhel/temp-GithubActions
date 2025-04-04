@@ -232,11 +232,6 @@ public class dataStore {
             return movie.getTitle();
         }
     
-        // Getter for booking price
-        public double getBookingPrice() {
-            return price;
-        }
-    
         // Override toString() to display booking details
         @Override
         public String toString() {
