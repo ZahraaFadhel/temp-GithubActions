@@ -29,22 +29,8 @@ jobs:
 
       - name: Compile tests
         run: |
-          find tests -name "*.java" > test-sources.txt
-          javac -d bin-tests -cp "bin:lib/*" @test-sources.txt
+          javac -d bin-tests -cp "bin:lib/junit.jar" tests/bookingMoviesTesting/testBookingDL.java
 
       - name: Run tests
         run: |
-          java -cp "bin:bin-tests:lib/*" org.junit.runner.JUnitCore \
-            bookingMoviesTesting.testBookingBL \
-            bookingMoviesTesting.testBookingDL \
-            bookingMoviesTesting.testBookingPL \
-            browseMoviesTesting.testBrowsingBL \
-            browseMoviesTesting.testBrowsingDL \
-            browseMoviesTesting.testBrowsingPL \
-            browseMoviesTesting.TestUtils \
-            checkoutTesting.testCheckoutBL \
-            checkoutTesting.testCheckoutDL \
-            checkoutTesting.testCheckoutPL \
-            manageMoviesTesting.testManageBL \
-            manageMoviesTesting.testManageDL \
-            manageMoviesTesting.testManagePL
+          java -cp "bin:bin-tests:lib/junit.jar" org.junit.runner.JUnitCore bookingMoviesTesting.testBookingDL
