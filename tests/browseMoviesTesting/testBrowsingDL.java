@@ -87,10 +87,4 @@ public class testBrowsingDL {
     }
 
     // Test search functionality for existing movie by genre
-    // @Test
-    // public void testSearchMoviesByExistingGenre() {
-    //     DL.searchMoviesByGenre("Action");
-    //     Assert.assertTrue("At least one Action movie should exist", 
-    //                       DL.movies().stream().anyMatch(m -> m.getGenre().equalsIgnoreCase("Action")));
-    // }
 }
