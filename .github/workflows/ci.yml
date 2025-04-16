@@ -39,9 +39,9 @@ jobs:
             tests/checkoutTesting/testCheckoutDL.java \
             tests/checkoutTesting/testCheckoutBL.java \
             tests/checkoutTesting/testCheckoutPL.java \
-            tests/manageMovies/testManageDL.java \
-            tests/manageMovies/testManageBL.java \
-            tests/manageMovies/testManagePL.java
+            tests/manageMoviesTesting/testManageDL.java \
+            tests/manageMoviesTesting/testManageBL.java \
+            tests/manageMoviesTesting/testManagePL.java
 
       - name: Run tests
         run: |
@@ -55,6 +55,6 @@ jobs:
             tests.checkoutTesting.testCheckoutDL \
             tests.checkoutTesting.testCheckoutBL \
             tests.checkoutTesting.testCheckoutPL \
-            tests.manageMovies.testManageDL \
-            tests.manageMovies.testManageBL \
-            tests.manageMovies.testManagePL
+            tests.manageMoviesTesting.testManageDL \
+            tests.manageMoviesTesting.testManageBL \
+            tests.manageMoviesTesting.testManagePL
