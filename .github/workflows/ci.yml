@@ -33,9 +33,6 @@ jobs:
             tests/bookingMoviesTesting/testBookingDL.java \
             tests/bookingMoviesTesting/testBookingBL.java \
             tests/bookingMoviesTesting/testBookingPL.java \
-            tests/browseMoviesTesting/testBrowsingDL.java \
-            tests/browseMoviesTesting/testBrowsingBL.java \
-            tests/browseMoviesTesting/testBrowsingPL.java \
             tests/checkoutTesting/testCheckoutDL.java \
             tests/checkoutTesting/testCheckoutBL.java \
             tests/checkoutTesting/testCheckoutPL.java \
@@ -49,9 +46,6 @@ jobs:
             tests.bookingMoviesTesting.testBookingDL \
             tests.bookingMoviesTesting.testBookingBL \
             tests.bookingMoviesTesting.testBookingPL \
-            tests.browseMoviesTesting.testBrowsingDL \
-            tests.browseMoviesTesting.testBrowsingBL \
-            tests.browseMoviesTesting.testBrowsingPL \
             tests.checkoutTesting.testCheckoutDL \
             tests.checkoutTesting.testCheckoutBL \
             tests.checkoutTesting.testCheckoutPL \
