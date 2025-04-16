@@ -38,7 +38,7 @@ jobs:
       run: |
         find src -name "*.java" > sources.txt || echo "No Java files found in src/"
         if [ -s sources.txt ]; then
-          javac -d bin -encoding UTF-8 @sources.txt
+          javac -d bin -encoding UTF-8 --release 17 @sources.txt
         else
           echo "::warning::No main Java files to compile"
         fi
