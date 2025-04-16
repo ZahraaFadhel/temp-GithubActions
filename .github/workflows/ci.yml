@@ -33,4 +33,4 @@ jobs:
 
       - name: Run tests
         run: |
-          java -cp "bin:bin-tests:lib/junit.jar" org.junit.runner.JUnitCore bookingMoviesTesting.testBookingDL
+          java -cp "bin:bin-tests:lib/junit.jar" org.junit.runner.JUnitCore tests.bookingMoviesTesting.testBookingDL
