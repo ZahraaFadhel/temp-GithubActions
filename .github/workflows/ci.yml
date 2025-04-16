@@ -112,4 +112,7 @@ jobs:
         echo "================================"
         
         # Continue on test failure to see all results
-        java -cp "bin${CP_SEP}bin-tests${CP_SEP}lib/junit.jar" org.junit.runner.JUnitCore $TEST_CLASSES || echo "::warning::Some tests failed"
+        java -jar lib/junit-platform-console-standalone-1.12.0.jar \
+        --class-path "bin${CP_SEP}bin-tests" \
+        --scan-class-path || echo "::warning::Some tests failed"
+
