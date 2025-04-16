@@ -7,7 +7,6 @@ import src.primaryUseCases.browseMovies.browseMoviesBusinessLayer;
 import src.primaryUseCases.browseMovies.browseMoviesDataLayer;
 import src.dataStore;
 import java.util.Scanner;
-
 public class testBrowsingBL {
 
     private browseMoviesBusinessLayer BL;
