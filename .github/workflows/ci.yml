@@ -10,96 +10,101 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [17] # Explicitly set Java 17
+        java: [17] 
 
     steps:
-      - uses: actions/checkout@v4
+    # --- Get the latest code ---
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-      - name: Set up JDK 17 (Temurin)
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: "temurin"
-          check-latest: true
+    # --- Setup Java ---
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'temurin'
 
-      - name: Verify Java Installation
-        run: |
-          echo "JAVA_HOME: $JAVA_HOME"
-          echo "Java version: $(java -version 2>&1 | head -n 1)"
-          echo "Javac version: $(javac -version 2>&1)"
-          echo "Java path: $(which java)"
-          echo "Javac path: $(which javac)"    
+    - name: Verify Java version
+      run: |
+        echo "Java version:"
+        java -version
+        echo "Javac version:"
+        javac -version    
 
-      - name: Debug Java Environment
-        run: |
-          echo "Matrix Java version: ${{ matrix.java }}"
-          java -version
-          javac -version
+    # --- Prepare folders ---
+    - name: Prepare directories
+      run: |
+        mkdir -p bin
+        mkdir -p bin-tests
+        echo "Project structure:"
+        ls -R src tests *-randoop || echo "Some directories may not exist yet"
 
-      - name: Compile main code
-        run: |
-          find src -name "*.java" > sources.txt || echo "No Java files found in src/"
-          if [ -s sources.txt ]; then
-            "$JAVA_HOME/bin/javac" -d bin -encoding UTF-8 --release 17 @sources.txt
-          else
-            echo "::warning::No main Java files to compile"
-          fi
+    # --- Compile main code ---
+    - name: Compile main code
+      run: |
+        find src -name "*.java" > sources.txt || echo "No Java files found in src/"
+        if [ -s sources.txt ]; then
+          "$JAVA_HOME/bin/javac" -d bin -encoding UTF-8 --release 17 @sources.txt
+        else
+          echo "::warning::No main Java files to compile"
+        fi
 
-      # --- Compile tests ---
-      - name: Compile tests (OS-aware)
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            CP_SEP=";"
-            FIND_CMD="dir /s /b *.java"
-          else
-            CP_SEP=":"
-            FIND_CMD="find . -name '*.java'"
-          fi
+    # --- Compile tests ---
+    - name: Compile tests (OS-aware)
+      shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          CP_SEP=";"
+          FIND_CMD="dir /s /b *.java"
+        else
+          CP_SEP=":"
+          FIND_CMD="find . -name '*.java'"
+        fi
 
-          # Compile manual tests
-          echo "Looking for manual tests..."
-          $FIND_CMD | grep -e "^tests/" > manual_tests.txt || true
-          if [ -s manual_tests.txt ]; then
-            javac -d bin-tests -encoding UTF-8 -cp "bin${CP_SEP}lib/junit.jar" @manual_tests.txt
-          else
-            echo "::notice::No manual tests found in tests/"
-          fi
+        # Compile manual tests
+        echo "Looking for manual tests..."
+        $FIND_CMD | grep -e "^tests/" > manual_tests.txt || true
+        if [ -s manual_tests.txt ]; then
+          javac -d bin-tests -encoding UTF-8 -cp "bin${CP_SEP}lib/junit.jar" @manual_tests.txt
+        else
+          echo "::notice::No manual tests found in tests/"
+        fi
 
-          # Compile Randoop tests
-          echo "Looking for Randoop tests..."
-          $FIND_CMD | grep -e "-randoop/" > randoop_tests.txt || true
-          if [ -s randoop_tests.txt ]; then
-            javac -d bin-tests -encoding UTF-8 -cp "bin${CP_SEP}lib/junit.jar" @randoop_tests.txt
-          else
-            echo "::notice::No Randoop tests found in *-randoop/"
-          fi
+        # Compile Randoop tests
+        echo "Looking for Randoop tests..."
+        $FIND_CMD | grep -e "-randoop/" > randoop_tests.txt || true
+        if [ -s randoop_tests.txt ]; then
+          javac -d bin-tests -encoding UTF-8 -cp "bin${CP_SEP}lib/junit.jar" @randoop_tests.txt
+        else
+          echo "::notice::No Randoop tests found in *-randoop/"
+        fi
 
-      # --- Run tests ---
-      - name: Run tests
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            CP_SEP=";"
-            FIND_CMD="dir /s /b *.class"
-          else
-            CP_SEP=":"
-            FIND_CMD="find bin-tests -name '*.class'"
-          fi
+    # --- Run tests ---
+    - name: Run tests
+      shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          CP_SEP=";"
+          FIND_CMD="dir /s /b *.class"
+        else
+          CP_SEP=":"
+          FIND_CMD="find bin-tests -name '*.class'"
+        fi
 
-          echo "Discovering test classes..."
-          TEST_CLASSES=$($FIND_CMD | grep -v '\$' | sed 's/\.class$//' | tr '/' '.' | sed 's/bin-tests.//')
+        echo "Discovering test classes..."
+        TEST_CLASSES=$($FIND_CMD | grep -v '\$' | sed 's/\.class$//' | tr '/' '.' | sed 's/bin-tests.//')
+        
+        if [ -z "$TEST_CLASSES" ]; then
+          echo "::error::No test classes found in bin-tests/"
+          echo "Check that:"
+          echo "1. Test files end with 'Test.java'"
+          echo "2. Files are in tests/ or *-randoop/ folders"
+          exit 1
+        fi
 
-          if [ -z "$TEST_CLASSES" ]; then
-            echo "::error::No test classes found in bin-tests/"
-            echo "Check that:"
-            echo "1. Test files end with 'Test.java'"
-            echo "2. Files are in tests/ or *-randoop/ folders"
-            exit 1
-          fi
-
-          echo "=== Running these test classes ==="
-          echo "$TEST_CLASSES" | tr ' ' '\n'
-          echo "================================"
-
-          java -cp "bin${CP_SEP}bin-tests${CP_SEP}lib/junit.jar" org.junit.runner.JUnitCore $TEST_CLASSES || echo "::warning::Some tests failed"
+        echo "=== Running these test classes ==="
+        echo "$TEST_CLASSES" | tr ' ' '\n'
+        echo "================================"
+        
+        java -cp "bin${CP_SEP}bin-tests${CP_SEP}lib/junit.jar" org.junit.runner.JUnitCore $TEST_CLASSES || echo "::warning::Some tests failed"
