@@ -85,9 +85,5 @@ public class testBrowsingDL {
         Assert.assertFalse("No movies should exist within rating range 5.0 - 6.0", 
                            DL.movies().stream().anyMatch(m -> m.getImdbRating() >= 5.0 && m.getImdbRating() <= 6.0));
     }
-
-    // Test search functionality for existing movie by genre
-    // comment 2
-    // testing comment
 }
 
