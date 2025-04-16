@@ -27,10 +27,34 @@ jobs:
           find src/cmd -name "*.java" > sources.txt
           javac -d bin @sources.txt
 
-      - name: Compile tests
-        run: |
-          javac -d bin-tests -cp "bin:lib/junit.jar" tests/bookingMoviesTesting/testBookingDL.java
-
+          - name: Compile tests
+          run: |
+            javac -d bin-tests -cp "bin:lib/junit.jar" \
+              tests/bookingMoviesTesting/testBookingDL.java \
+              tests/bookingMoviesTesting/testBookingBL.java \
+              tests/bookingMoviesTesting/testBookingPL.java \
+              tests/browseMoviesTesting/testBrowsingDL.java \
+              tests/browseMoviesTesting/testBrowsingBL.java \
+              tests/browseMoviesTesting/testBrowsingPL.java \
+              tests/checkoutTesting/testCheckoutDL.java \
+              tests/checkoutTesting/testCheckoutBL.java \
+              tests/checkoutTesting/testCheckoutPL.java \
+              tests/manageMovies/testManageDL.java \
+              tests/manageMovies/testManageBL.java \
+              tests/manageMovies/testManagePL.java
+        
       - name: Run tests
         run: |
-          java -cp "bin:bin-tests:lib/junit.jar" org.junit.runner.JUnitCore tests.bookingMoviesTesting.testBookingDL
+          java -cp "bin:bin-tests:lib/junit.jar" org.junit.runner.JUnitCore \
+            tests.bookingMoviesTesting.testBookingDL \
+            tests.bookingMoviesTesting.testBookingBL \
+            tests.bookingMoviesTesting.testBookingPL \
+            tests.browseMoviesTesting.testBrowsingDL \
+            tests.browseMoviesTesting.testBrowsingBL \
+            tests.browseMoviesTesting.testBrowsingPL \
+            tests.checkoutTesting.testCheckoutDL \
+            tests.checkoutTesting.testCheckoutBL \
+            tests.checkoutTesting.testCheckoutPL \
+            tests.manageMovies.testManageDL \
+            tests.manageMovies.testManageBL \
+            tests.manageMovies.testManagePL
