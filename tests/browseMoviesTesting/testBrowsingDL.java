@@ -85,4 +85,12 @@ public class testBrowsingDL {
         Assert.assertFalse("No movies should exist within rating range 5.0 - 6.0", 
                            DL.movies().stream().anyMatch(m -> m.getImdbRating() >= 5.0 && m.getImdbRating() <= 6.0));
     }
+
+    // Test search functionality for existing movie by genre
+    // @Test
+    // public void testSearchMoviesByExistingGenre() {
+    //     DL.searchMoviesByGenre("Action");
+    //     Assert.assertTrue("At least one Action movie should exist", 
+    //                       DL.movies().stream().anyMatch(m -> m.getGenre().equalsIgnoreCase("Action")));
+    // }
 }
