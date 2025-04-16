@@ -25,6 +25,13 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
 
+    - name: Verify Java version
+      run: |
+        echo "Java version:"
+        java -version
+        echo "Javac version:"
+        javac -version    
+
     # --- Prepare folders ---
     - name: Prepare directories
       run: |
@@ -38,7 +45,7 @@ jobs:
       run: |
         find src -name "*.java" > sources.txt || echo "No Java files found in src/"
         if [ -s sources.txt ]; then
-          javac -d bin -encoding UTF-8 --release 17 @sources.txt
+          "$JAVA_HOME/bin/javac" -d bin -encoding UTF-8 --release 17 @sources.txt
         else
           echo "::warning::No main Java files to compile"
         fi

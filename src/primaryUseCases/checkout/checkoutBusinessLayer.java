@@ -96,13 +96,13 @@ public class checkoutBusinessLayer {
                     }
 
                     switch (choice) {
-                        case 1: 
+                        case 1 -> {
                             return handleSavedPaymentMethod();
-                        
-                        case 2:
+                        }
+                        case 2 -> {
                             return handleNewPaymentMethod();
-                        
-                        default:
+                        }
+                        default ->
                             System.out.println(consoleColors.RED_BOLD + "Error: Wrong input, try again." + consoleColors.RESET);
                     }
                 } catch (NumberFormatException e) {
