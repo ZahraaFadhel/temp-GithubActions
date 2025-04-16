@@ -2,7 +2,7 @@ name: Java CI with JUnit
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -24,18 +24,16 @@ jobs:
 
       - name: Compile main code
         run: |
-          find src -name "*.java" > sources.txt
+          find src/cmd -name "*.java" > sources.txt
           javac -d bin @sources.txt
 
       - name: Compile tests
         run: |
-          # Compile all test files in the tests directory
           find tests -name "*.java" > test-sources.txt
           javac -d bin-tests -cp "bin:lib/*" @test-sources.txt
 
       - name: Run tests
         run: |
-          # Run tests for each package
           java -cp "bin:bin-tests:lib/*" org.junit.runner.JUnitCore \
             bookingMoviesTesting.testBookingBL \
             bookingMoviesTesting.testBookingDL \
