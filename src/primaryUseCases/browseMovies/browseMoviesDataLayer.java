@@ -3,6 +3,8 @@
  * It interacts with the dataStore to retrieve and search for movies based on criteria: title, language and rating.
  */
 
+ // new comment
+
 package src.primaryUseCases.browseMovies;
 
 import java.util.List;
