@@ -96,6 +96,6 @@ public class checkoutDataLayer {
         if (cvv == null) {
             return false; // Null is not a valid CVV
         }
-        return cvv.trim().matches("^\\d{3}$"); // Exactly 3 digits (0-9)
+        return cvv.trim().matches("^\\d{4}$"); // Exactly 3 digits (0-9)
     }
 }
